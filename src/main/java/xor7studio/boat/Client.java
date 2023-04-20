@@ -46,6 +46,7 @@ public class Client {
                         public void initChannel(SocketChannel channel) {
                             ChannelPipeline pipeline = channel.pipeline();
                             pipeline.addLast(PacketCodeCHandler.INSTANCE);
+
                         }
                     });
             ChannelFuture channelFuture = bootstrap.connect(centerServerAddress).sync();
