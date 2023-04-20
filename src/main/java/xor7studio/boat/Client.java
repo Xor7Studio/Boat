@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xor7studio.boat.packet.PacketCodeCHandler;
 
 import java.net.InetSocketAddress;
 
@@ -44,6 +45,7 @@ public class Client {
                         @Override
                         public void initChannel(SocketChannel channel) {
                             ChannelPipeline pipeline = channel.pipeline();
+                            pipeline.addLast(PacketCodeCHandler.INSTANCE);
                         }
                     });
             ChannelFuture channelFuture = bootstrap.connect(centerServerAddress).sync();

@@ -11,6 +11,7 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xor7studio.boat.packet.PacketCodeCHandler;
 
 import java.net.BindException;
 import java.net.InetSocketAddress;
@@ -31,6 +32,7 @@ public class CenterServer {
                         @Override
                         public void initChannel(SocketChannel channel) {
                             ChannelPipeline pipeline = channel.pipeline();
+                            pipeline.addLast(PacketCodeCHandler.INSTANCE);
                         }
                     });
             ChannelFuture channelFuture = serverBootstrap.bind(listenAddress).sync();
