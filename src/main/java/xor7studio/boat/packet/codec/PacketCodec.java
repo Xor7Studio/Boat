@@ -1,4 +1,4 @@
-package xor7studio.boat.packet;
+package xor7studio.boat.packet.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.protostuff.LinkedBuffer;
@@ -6,16 +6,18 @@ import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
 import org.jetbrains.annotations.NotNull;
+import xor7studio.boat.packet.Packet;
+import xor7studio.boat.packet.PacketManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PacketCodeC {
-    public static final PacketCodeC INSTANCE = new PacketCodeC();
+public class PacketCodec {
+    public static final PacketCodec INSTANCE = new PacketCodec();
     private final ThreadLocal<LinkedBuffer> bufferThreadLocal = ThreadLocal.withInitial(() -> LinkedBuffer.allocate(512));
     private final ThreadLocal<Map<Class<? extends Packet>, Schema<? extends Packet>>> schemaMapThreadLocal = ThreadLocal.withInitial(HashMap::new);
-    private PacketCodeC(){}
+    protected PacketCodec(){}
     public <T extends Packet> void encode(@NotNull T packet,@NotNull ByteBuf result) {
         @SuppressWarnings("unchecked")
         Class<T> clazz = (Class<T>) packet.getClass();

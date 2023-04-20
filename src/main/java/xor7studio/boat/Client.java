@@ -8,10 +8,12 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xor7studio.boat.packet.PacketCodeCHandler;
+import xor7studio.boat.packet.codec.PacketAesCodec;
+import xor7studio.boat.packet.codec.PacketCodecHandler;
 
 import java.net.InetSocketAddress;
 
@@ -28,7 +30,6 @@ public class Client {
     }
     private boolean createApp(){
         if(true){
-
             appID="";
             appToken="";
             return true;
@@ -45,8 +46,9 @@ public class Client {
                         @Override
                         public void initChannel(SocketChannel channel) {
                             ChannelPipeline pipeline = channel.pipeline();
-                            pipeline.addLast(PacketCodeCHandler.INSTANCE);
-
+                            pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));
+                            pipeline.addLast(PacketAesCodec.INSTANCE);
+                            pipeline.addLast(PacketCodecHandler.INSTANCE);
                         }
                     });
             ChannelFuture channelFuture = bootstrap.connect(centerServerAddress).sync();

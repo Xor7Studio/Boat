@@ -7,11 +7,13 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xor7studio.boat.packet.PacketCodeCHandler;
+import xor7studio.boat.packet.codec.PacketAesCodec;
+import xor7studio.boat.packet.codec.PacketCodecHandler;
 
 import java.net.BindException;
 import java.net.InetSocketAddress;
@@ -32,7 +34,9 @@ public class CenterServer {
                         @Override
                         public void initChannel(SocketChannel channel) {
                             ChannelPipeline pipeline = channel.pipeline();
-                            pipeline.addLast(PacketCodeCHandler.INSTANCE);
+                            pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));
+                            pipeline.addLast(PacketAesCodec.INSTANCE);
+                            pipeline.addLast(PacketCodecHandler.INSTANCE);
                         }
                     });
             ChannelFuture channelFuture = serverBootstrap.bind(listenAddress).sync();
