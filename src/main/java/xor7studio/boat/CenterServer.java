@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xor7studio.boat.packet.codec.PacketAesCodec;
 import xor7studio.boat.packet.codec.PacketCodecHandler;
+import xor7studio.boat.packet.command.PacketCommandHandler;
 
 import java.net.BindException;
 import java.net.InetSocketAddress;
@@ -37,6 +38,7 @@ public class CenterServer {
                             pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));
                             pipeline.addLast(PacketAesCodec.INSTANCE);
                             pipeline.addLast(PacketCodecHandler.INSTANCE);
+                            pipeline.addLast(PacketCommandHandler.INSTANCE);
                         }
                     });
             ChannelFuture channelFuture = serverBootstrap.bind(listenAddress).sync();

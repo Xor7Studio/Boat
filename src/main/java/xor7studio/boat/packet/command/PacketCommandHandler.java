@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.packet.Packet;
 
 public class PacketCommandHandler extends SimpleChannelInboundHandler<Packet> {
+    public static final PacketCommandHandler INSTANCE = new PacketCommandHandler();
+    protected PacketCommandHandler(){}
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, @NotNull Packet packet) throws Exception {
         packet.getHandler().channelRead(ctx,packet);
