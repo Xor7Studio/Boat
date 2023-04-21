@@ -1,6 +1,7 @@
 package xor7studio.boat.packet.codec;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;
@@ -42,7 +43,7 @@ public class PacketCodec {
         Class<T> clazz = (Class<T>) packet.getClass();
         LinkedBuffer buffer = bufferThreadLocal.get();
         Schema<T> schema = getSchema(clazz);
-        byte[] bytes = new byte[0];
+        byte[] bytes;
         try {
             bytes = encrypt(ProtostuffIOUtil.toByteArray(packet, schema, buffer));
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException |
@@ -79,13 +80,14 @@ public class PacketCodec {
         SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
         IvParameterSpec ivSpec = new IvParameterSpec(iv);
         cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
-        byte[] tmp = cipher.update(data);
-        byte[] tail = cipher.doFinal();
-        byte[] result = new byte[iv.length + tmp.length + tail.length];
-        System.arraycopy(iv, 0, result, 0, iv.length);
-        System.arraycopy(tmp, 0, result, iv.length, tmp.length);
-        System.arraycopy(tail, 0, result, iv.length + tmp.length, tail.length);
-        return result;
+        ByteBuf result = ByteBufAllocator.DEFAULT.buffer();
+        result.writeBytes(iv);
+        result.writeBytes(cipher.update(data));
+        result.writeBytes(cipher.doFinal());
+        byte[] res = new byte[result.readableBytes()];
+        result.readBytes(res);
+        result.release();
+        return res;
     }
     private byte @NotNull [] decrypt(@NotNull ByteBuf byteBuf)
             throws NoSuchPaddingException, NoSuchAlgorithmException,
@@ -100,12 +102,13 @@ public class PacketCodec {
         cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
         byte[] bytes = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(bytes);
-        byte[] tmp = cipher.update(bytes);
-        byte[] tail = cipher.doFinal();
-        byte[] result = new byte[tmp.length + tail.length];
-        System.arraycopy(tmp,0,result,0,tmp.length);
-        System.arraycopy(tail,0,result,tmp.length,tail.length);
-        return result;
+        ByteBuf result = ByteBufAllocator.DEFAULT.buffer();
+        result.writeBytes(cipher.update(bytes));
+        result.writeBytes(cipher.doFinal());
+        byte[] res = new byte[result.readableBytes()];
+        result.readBytes(res);
+        result.release();
+        return res;
     }
     @SuppressWarnings("unchecked")
     private <T extends Packet> Schema<T> getSchema(Class<T> clazz) {
