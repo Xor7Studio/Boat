@@ -1,4 +1,4 @@
-package xor7studio.boat;
+package xor7studio.boat.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -12,9 +12,9 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xor7studio.boat.packet.codec.PacketAesCodec;
 import xor7studio.boat.packet.codec.PacketCodecHandler;
 import xor7studio.boat.packet.command.PacketCommandHandler;
+import xor7studio.boat.packet.command.handshake.HandshakeRequestPacket;
 
 import java.net.InetSocketAddress;
 
@@ -28,9 +28,15 @@ public class Client {
     private String appToken;
     public Client(InetSocketAddress authServerAddr){
         this.authServerAddress=authServerAddr;
+        if(!createApp()){
+            logger.error("创建App时发生错误");
+            return;
+        }
+        connectApp();
     }
     private boolean createApp(){
         if(true){
+            centerServerAddress=new InetSocketAddress("localhost",11099);
             appID="";
             appToken="";
             return true;
@@ -48,7 +54,6 @@ public class Client {
                         public void initChannel(SocketChannel channel) {
                             ChannelPipeline pipeline = channel.pipeline();
                             pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));
-                            pipeline.addLast(PacketAesCodec.INSTANCE);
                             pipeline.addLast(PacketCodecHandler.INSTANCE);
                             pipeline.addLast(PacketCommandHandler.INSTANCE);
                         }
@@ -56,7 +61,10 @@ public class Client {
             ChannelFuture channelFuture = bootstrap.connect(centerServerAddress).sync();
             channelFuture.addListener(future -> {
                 if(future.isSuccess())
-                    logger.info("成功连接到中心服务器");
+                    logger.error("成功连接到中心服务器");
+                HandshakeRequestPacket packet = new HandshakeRequestPacket();
+                packet.setAppID("zz");
+                channelFuture.channel().writeAndFlush(packet);
             });
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

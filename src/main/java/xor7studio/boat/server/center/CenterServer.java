@@ -1,4 +1,4 @@
-package xor7studio.boat;
+package xor7studio.boat.server.center;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -12,7 +12,6 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xor7studio.boat.packet.codec.PacketAesCodec;
 import xor7studio.boat.packet.codec.PacketCodecHandler;
 import xor7studio.boat.packet.command.PacketCommandHandler;
 
@@ -36,7 +35,6 @@ public class CenterServer {
                         public void initChannel(SocketChannel channel) {
                             ChannelPipeline pipeline = channel.pipeline();
                             pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));
-                            pipeline.addLast(PacketAesCodec.INSTANCE);
                             pipeline.addLast(PacketCodecHandler.INSTANCE);
                             pipeline.addLast(PacketCommandHandler.INSTANCE);
                         }

@@ -10,6 +10,6 @@ public class HandshakeRequestHandler extends SimpleChannelInboundHandler<Handsha
     protected HandshakeRequestHandler(){}
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HandshakeRequestPacket packet) throws Exception {
-
+        System.out.println(packet.getAppID());
     }
 }
