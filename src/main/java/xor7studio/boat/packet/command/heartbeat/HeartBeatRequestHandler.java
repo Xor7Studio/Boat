@@ -10,6 +10,5 @@ public class HeartBeatRequestHandler extends SimpleChannelInboundHandler<HeartBe
     protected HeartBeatRequestHandler(){}
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HeartBeatRequestPacket packet) throws Exception {
-        System.out.println(packet.getAppID());
     }
 }

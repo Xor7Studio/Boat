@@ -9,9 +9,8 @@ public class HeartBeatRequestPacket extends Packet {
     public HeartBeatRequestPacket(){}
     @Override
     public Byte getCommand() {
-        return PacketCommand.HANDSHAKE_REQUEST;
+        return PacketCommand.HEARTBEAT_REQUEST;
     }
-    String appID;
     @Override
     @SuppressWarnings("unchecked")
     public HeartBeatRequestHandler getHandler() {

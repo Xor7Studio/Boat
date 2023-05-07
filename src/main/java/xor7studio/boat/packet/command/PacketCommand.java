@@ -1,6 +1,9 @@
 package xor7studio.boat.packet.command;
 
 public interface PacketCommand {
-    Byte HANDSHAKE_REQUEST = 1;
-    Byte HANDSHAKE_RESPONSE = 2;
+    byte HEARTBEAT_REQUEST = 1;
+    byte HEARTBEAT_RESPONSE = 2;
+    byte HANDSHAKE_REQUEST = 3;
+    byte HANDSHAKE_RESPONSE = 4;
+
 }

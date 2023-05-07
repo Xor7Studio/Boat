@@ -7,7 +7,7 @@ import xor7studio.boat.packet.command.PacketCommand;
 @Data
 public class HandshakeRequestPacket extends Packet {
     public HandshakeRequestPacket(){}
-    private String appID;
+    private String sessionToken;
     @Override
     public Byte getCommand() {
         return PacketCommand.HANDSHAKE_REQUEST;

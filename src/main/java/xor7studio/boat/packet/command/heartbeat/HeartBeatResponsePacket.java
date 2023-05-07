@@ -6,7 +6,7 @@ import xor7studio.boat.packet.command.PacketCommand;
 public class HeartBeatResponsePacket extends Packet {
     @Override
     public Byte getCommand() {
-        return PacketCommand.HANDSHAKE_RESPONSE;
+        return PacketCommand.HEARTBEAT_RESPONSE;
     }
     @Override
     @SuppressWarnings("unchecked")

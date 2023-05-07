@@ -6,7 +6,7 @@
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
+            <level>INFO</level>
         </filter>
     </appender>
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">

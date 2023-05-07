@@ -12,7 +12,7 @@ import lombok.SneakyThrows;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.packet.Packet;
-import xor7studio.boat.packet.PacketManager;
+import xor7studio.boat.packet.command.PacketCommandManager;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -58,7 +58,7 @@ public class PacketCodec {
     public <T extends Packet> @NotNull T decode(@NotNull ByteBuf byteBuf)
             throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         @SuppressWarnings("unchecked")
-        Class<T> clazz = (Class<T>) PacketManager.INSTANCE.getPacket(byteBuf.readByte());
+        Class<T> clazz = (Class<T>) PacketCommandManager.INSTANCE.getPacket(byteBuf.readByte());
         byteBuf.skipBytes(4);
         T packet = clazz.getConstructor().newInstance();
         Schema<T> schema = getSchema(clazz);
