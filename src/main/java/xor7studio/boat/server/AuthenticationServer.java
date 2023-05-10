@@ -6,7 +6,6 @@ import io.javalin.config.JavalinConfig;
 import io.javalin.http.HttpStatus;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import xor7studio.boat.Config;
 
 import java.net.InetSocketAddress;
 
@@ -23,7 +22,7 @@ public class AuthenticationServer {
     }
     private void setJavalinConfig(@NotNull JavalinConfig config){
         config.plugins.register(new SSLPlugin(ssl->{
-            ssl.pemFromPath((String) Config.INSTANCE.get("web_certificate"), (String) Config.INSTANCE.get("web_private_key"));
+//            ssl.pemFromPath((String) Config.INSTANCE.get("web_certificate"), (String) Config.INSTANCE.get("web_private_key"));
             ssl.securePort=listen.getPort();
             ssl.http2=true;
             ssl.secure=true;

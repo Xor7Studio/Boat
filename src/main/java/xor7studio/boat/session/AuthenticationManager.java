@@ -58,7 +58,7 @@ public class AuthenticationManager {
         Claims claims = claimsJws.getBody();
         if(claims.getExpiration().before(Date.from(Instant.now())))
             throw new ExpiredJwtException(claimsJws.getHeader(), claims,"");
-        if(claims.getIssuer().equals(""))
+        if(claims.getIssuer().equals(""));
         return claims.getSubject();
     }
     private @NotNull KeyPair loadKeyPairFromFile(Path keyPairFile) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {

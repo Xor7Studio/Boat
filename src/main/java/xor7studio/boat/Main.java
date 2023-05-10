@@ -5,6 +5,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xor7studio.boat.config.BoatConfigFile;
 
 public class Main {
     @Getter
@@ -12,7 +13,7 @@ public class Main {
     @Getter
     private static boolean isClient;
     public static void main(String[] args) {
-        System.out.println(Config.INSTANCE.get("mode"));
+        System.out.println(BoatConfigFile.loadDefaultFile().config.run_as);
 //        Options options = new Options();
 //        options.addOption("h","help",false,"获取帮助");
 //        OptionGroup mode = new OptionGroup();
