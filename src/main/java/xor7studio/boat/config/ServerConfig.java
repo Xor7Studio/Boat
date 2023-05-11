@@ -1,10 +1,13 @@
 package xor7studio.boat.config;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ServerConfig {
     public String authentication_keypair_file="AUTHENTICATION_KEYPAIR_FILE";
     public AuthenticationServiceConfig authentication=new AuthenticationServiceConfig();
     public LongConnectionServiceConfig longConnection=new LongConnectionServiceConfig();
-    public TracebackServiceConfig traceback=new TracebackServiceConfig();
+    public Set<TracebackServiceConfig> tracebacks= new HashSet<>();
     private static class ServiceConfig {
         public boolean run=true;
         public String listen;

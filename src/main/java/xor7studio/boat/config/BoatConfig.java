@@ -4,4 +4,5 @@ public class BoatConfig {
     public String run_as="client";
     public ServerConfig server=new ServerConfig();
     public ClientConfig client=new ClientConfig();
+    public CostumeConfig costume=null;
 }

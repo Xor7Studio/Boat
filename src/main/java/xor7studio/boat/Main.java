@@ -1,8 +1,6 @@
 package xor7studio.boat;
 
 import lombok.Getter;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xor7studio.boat.config.BoatConfigFile;
@@ -14,6 +12,9 @@ public class Main {
     private static boolean isClient;
     public static void main(String[] args) {
         System.out.println(BoatConfigFile.loadDefaultFile().config.run_as);
+//        BoatConfigFile config=BoatConfigFile.loadDefaultFile();
+//        config.config.costume=new MyConfig();
+//        config.save();
 //        Options options = new Options();
 //        options.addOption("h","help",false,"获取帮助");
 //        OptionGroup mode = new OptionGroup();
@@ -39,9 +40,9 @@ public class Main {
 //            new LongConnectionServer(new InetSocketAddress("localhost",11099));
 //        }
     }
-    private static void printHelp(Options options,int exitCode){
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("Boat", options);
-        System.exit(exitCode);
-    }
+//    private static void printHelp(Options options,int exitCode){
+//        HelpFormatter formatter = new HelpFormatter();
+//        formatter.printHelp("Boat", options);
+//        System.exit(exitCode);
+//    }
 }
