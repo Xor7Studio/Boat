@@ -8,8 +8,6 @@ import xor7studio.boat.config.BoatConfigFile;
 public class BoatMain {
     @Getter
     private static final Logger logger = LoggerFactory.getLogger("Boat Server");
-    @Getter
-    private static boolean isClient;
     public static void main(String[] args) {
         System.out.println(BoatConfigFile.loadDefaultFile().config.run_as);
 //        BoatConfigFile config=BoatConfigFile.loadDefaultFile();
