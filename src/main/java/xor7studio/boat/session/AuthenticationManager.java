@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +22,7 @@ import java.util.Date;
 
 public class AuthenticationManager {
     public static final AuthenticationManager INSTANCE = new AuthenticationManager();
-    private final Path keyPairFile=Path.of("AUTHENTICATION_KEY_PAIR");
+    private final Path keyPairFile=new File("AUTHENTICATION_KEY_PAIR").toPath();
     protected AuthenticationManager(){
         try{
             authenticationKeyPair = Files.exists(keyPairFile)?
@@ -66,7 +67,7 @@ public class AuthenticationManager {
         return result;
     }
     private @NotNull KeyPair loadKeyPairFromFile(Path keyPairFile) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
-        String content = Files.readString(keyPairFile);
+        String content = new String(Files.readAllBytes(keyPairFile));
         String[] parts = content.split(":");
         if(parts.length!=2) return generateKeyPair();
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -80,7 +81,7 @@ public class AuthenticationManager {
     private void saveKeyPairToFile(@NotNull KeyPair keyPair) throws IOException {
         String publicKey = Encoders.BASE64.encode(keyPair.getPublic().getEncoded());
         String privateKey = Encoders.BASE64.encode(keyPair.getPrivate().getEncoded());
-        Files.writeString(keyPairFile, publicKey+":"+privateKey, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        Files.write(keyPairFile, (publicKey+":"+privateKey).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
     private KeyPair generateKeyPair() throws NoSuchAlgorithmException, IOException {
