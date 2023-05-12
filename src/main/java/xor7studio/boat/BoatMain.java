@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xor7studio.boat.config.BoatConfigFile;
 
-public class Main {
+public class BoatMain {
     @Getter
     private static final Logger logger = LoggerFactory.getLogger("Boat Server");
     @Getter

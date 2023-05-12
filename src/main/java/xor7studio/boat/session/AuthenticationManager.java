@@ -5,8 +5,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import lombok.Getter;
-import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -24,10 +22,6 @@ import java.util.Date;
 public class AuthenticationManager {
     public static final AuthenticationManager INSTANCE = new AuthenticationManager();
     private final Path keyPairFile=Path.of("AUTHENTICATION_KEY_PAIR");
-    //移动到Settings
-    @Getter
-    @Setter
-    private static String ISSUER = "Boat";
     protected AuthenticationManager(){
         try{
             authenticationKeyPair = Files.exists(keyPairFile)?
@@ -52,14 +46,24 @@ public class AuthenticationManager {
                 .signWith(authenticationKeyPair.getPrivate(), SignatureAlgorithm.RS256)
                 .compact();
     }
-    public String readBearerToken(String token) throws SignatureException,ExpiredJwtException {
+    public BearerTokenData readBearerToken(String token) throws SignatureException,ExpiredJwtException {
+        BearerTokenData result=new BearerTokenData();
         PublicKey publicKey = authenticationKeyPair.getPublic();
-        Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(publicKey).build().parseClaimsJws(token);
-        Claims claims = claimsJws.getBody();
-        if(claims.getExpiration().before(Date.from(Instant.now())))
-            throw new ExpiredJwtException(claimsJws.getHeader(), claims,"");
-        if(claims.getIssuer().equals(""));
-        return claims.getSubject();
+        try{
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
+                    .setSigningKey(publicKey)
+                    .requireIssuer("Boat")
+                    .requireAudience("Authentication")
+                    .requireExpiration(Date.from(Instant.now()))
+                    .setAllowedClockSkewSeconds(5*60)
+                    .build()
+                    .parseClaimsJws(token);
+            Claims claims = claimsJws.getBody();
+            result.subject=claims.getSubject();
+        }catch (JwtException e){
+            result.isValid=false;
+        }
+        return result;
     }
     private @NotNull KeyPair loadKeyPairFromFile(Path keyPairFile) throws NoSuchAlgorithmException, InvalidKeySpecException, IOException {
         String content = Files.readString(keyPairFile);
@@ -83,5 +87,9 @@ public class AuthenticationManager {
         KeyPair result=Keys.keyPairFor(SignatureAlgorithm.RS256);
         saveKeyPairToFile(result);
         return result;
+    }
+    public static class BearerTokenData{
+        public String subject;
+        public boolean isValid=true;
     }
 }

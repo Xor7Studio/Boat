@@ -1,6 +1,6 @@
 package xor7studio.boat.packet.command;
 
-import xor7studio.boat.Main;
+import xor7studio.boat.BoatMain;
 import xor7studio.boat.packet.Packet;
 import xor7studio.boat.packet.command.handshake.HandshakeRequestPacket;
 import xor7studio.boat.packet.command.handshake.HandshakeResponsePacket;
@@ -14,7 +14,7 @@ public class PacketCommandManager {
     public static final PacketCommandManager INSTANCE = new PacketCommandManager();
     private final Map<Byte,Class<? extends Packet>> packets=new HashMap<>();
     protected PacketCommandManager(){
-        if(Main.isClient()){
+        if(BoatMain.isClient()){
             packets.put(PacketCommand.HEARTBEAT_RESPONSE, HeartBeatResponsePacket.class);
             packets.put(PacketCommand.HANDSHAKE_RESPONSE, HandshakeResponsePacket.class);
         }else{
