@@ -9,8 +9,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import xor7studio.boat.packet.codec.PacketCodecHandler;
 import xor7studio.boat.packet.command.PacketCommandHandler;
 import xor7studio.boat.packet.command.PacketCommandManager;
@@ -19,7 +17,6 @@ import xor7studio.boat.session.SessionAttributes;
 import java.net.InetSocketAddress;
 
 public class Client {
-    private final Logger logger = LoggerFactory.getLogger("Boat Client");
     private final InetSocketAddress authServerAddress;
     @Getter
     private InetSocketAddress centerServerAddress;
@@ -29,7 +26,6 @@ public class Client {
     public Client(InetSocketAddress authServerAddr){
         this.authServerAddress=authServerAddr;
         if(!createApp()){
-            logger.error("创建App时发生错误");
             return;
         }
         connectApp();

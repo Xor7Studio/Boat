@@ -1,4 +1,4 @@
-package xor7studio.boat.session;
+package xor7studio.boat;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

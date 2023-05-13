@@ -5,20 +5,17 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import xor7studio.boat.packet.Packet;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @ChannelHandler.Sharable
-public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
-    private final Logger logger = LoggerFactory.getLogger("Boat Server");
+public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet<?>> {
     public static final PacketCodecHandler INSTANCE = new PacketCodecHandler();
     protected PacketCodecHandler(){}
     @Override
-    protected void encode(@NotNull ChannelHandlerContext ctx, Packet packet, @NotNull List<Object> out) {
+    protected void encode(@NotNull ChannelHandlerContext ctx, Packet<?> packet, @NotNull List<Object> out) {
         ByteBuf byteBuf = ctx.channel().alloc().ioBuffer();
         PacketCodec.INSTANCE.encode(packet,byteBuf);
         out.add(byteBuf);

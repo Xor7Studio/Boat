@@ -1,13 +1,8 @@
 package xor7studio.boat;
 
-import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import xor7studio.boat.config.BoatConfigFile;
 
 public class BoatMain {
-    @Getter
-    private static final Logger logger = LoggerFactory.getLogger("Boat Server");
     public static void main(String[] args) {
         System.out.println(BoatConfigFile.loadDefaultFile().config.run_as);
 //        BoatConfigFile config=BoatConfigFile.loadDefaultFile();
