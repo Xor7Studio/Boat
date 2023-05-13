@@ -1,4 +1,4 @@
-package xor7studio.boat.server;
+package xor7studio.boat.authentication;
 
 import lombok.Getter;
 import xor7studio.boat.config.ServerConfig;

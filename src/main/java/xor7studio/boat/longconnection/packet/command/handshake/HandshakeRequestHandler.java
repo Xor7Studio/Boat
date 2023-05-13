@@ -1,8 +1,8 @@
-package xor7studio.boat.packet.command.handshake;
+package xor7studio.boat.longconnection.packet.command.handshake;
 
 import io.netty.channel.*;
 import org.jetbrains.annotations.NotNull;
-import xor7studio.boat.session.SessionAttributes;
+import xor7studio.boat.longconnection.session.SessionAttributes;
 
 @ChannelHandler.Sharable
 public class HandshakeRequestHandler extends SimpleChannelInboundHandler<HandshakeRequestPacket> {

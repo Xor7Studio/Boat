@@ -1,11 +1,11 @@
-package xor7studio.boat.packet.codec;
+package xor7studio.boat.longconnection.packet.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import org.jetbrains.annotations.NotNull;
-import xor7studio.boat.packet.Packet;
+import xor7studio.boat.longconnection.packet.Packet;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;

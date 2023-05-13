@@ -3,8 +3,8 @@ package xor7studio.boat.client;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import org.jetbrains.annotations.NotNull;
-import xor7studio.boat.packet.command.handshake.HandshakeRequestPacket;
-import xor7studio.boat.session.SessionAttributes;
+import xor7studio.boat.longconnection.packet.command.handshake.HandshakeRequestPacket;
+import xor7studio.boat.longconnection.session.SessionAttributes;
 
 public class ClientHandler extends ChannelDuplexHandler {
     @Override

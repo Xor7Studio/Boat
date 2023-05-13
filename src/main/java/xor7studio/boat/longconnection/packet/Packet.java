@@ -1,4 +1,4 @@
-package xor7studio.boat.packet;
+package xor7studio.boat.longconnection.packet;
 
 import io.netty.channel.SimpleChannelInboundHandler;
 

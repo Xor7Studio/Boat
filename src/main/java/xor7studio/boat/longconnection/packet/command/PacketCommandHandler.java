@@ -1,10 +1,10 @@
-package xor7studio.boat.packet.command;
+package xor7studio.boat.longconnection.packet.command;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.jetbrains.annotations.NotNull;
-import xor7studio.boat.packet.Packet;
+import xor7studio.boat.longconnection.packet.Packet;
 
 @ChannelHandler.Sharable
 public class PacketCommandHandler extends SimpleChannelInboundHandler<Packet> {

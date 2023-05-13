@@ -1,8 +1,8 @@
-package xor7studio.boat.packet.command.handshake;
+package xor7studio.boat.longconnection.packet.command.handshake;
 
 import lombok.Data;
-import xor7studio.boat.packet.Packet;
-import xor7studio.boat.packet.command.PacketCommand;
+import xor7studio.boat.longconnection.packet.Packet;
+import xor7studio.boat.longconnection.packet.command.PacketCommand;
 
 @Data
 public class HandshakeRequestPacket extends Packet<HandshakeRequestHandler> {

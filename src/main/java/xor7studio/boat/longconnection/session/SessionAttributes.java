@@ -1,4 +1,4 @@
-package xor7studio.boat.session;
+package xor7studio.boat.longconnection.session;
 
 import io.netty.util.AttributeKey;
 

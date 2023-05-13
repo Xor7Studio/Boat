@@ -1,7 +1,7 @@
-package xor7studio.boat.packet.command.heartbeat;
+package xor7studio.boat.longconnection.packet.command.heartbeat;
 
-import xor7studio.boat.packet.Packet;
-import xor7studio.boat.packet.command.PacketCommand;
+import xor7studio.boat.longconnection.packet.Packet;
+import xor7studio.boat.longconnection.packet.command.PacketCommand;
 
 public class HeartBeatResponsePacket extends Packet<HeartBeatResponseHandler> {
     @Override

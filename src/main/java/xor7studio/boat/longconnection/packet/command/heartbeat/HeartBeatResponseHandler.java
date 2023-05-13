@@ -1,4 +1,4 @@
-package xor7studio.boat.packet.command.heartbeat;
+package xor7studio.boat.longconnection.packet.command.heartbeat;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;

@@ -1,4 +1,4 @@
-package xor7studio.boat.packet.command;
+package xor7studio.boat.longconnection.packet.command;
 
 public interface PacketCommand {
     byte HEARTBEAT_REQUEST = 1;

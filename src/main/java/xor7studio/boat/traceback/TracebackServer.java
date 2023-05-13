@@ -1,4 +1,4 @@
-package xor7studio.boat.server;
+package xor7studio.boat.traceback;
 
 import java.net.InetSocketAddress;
 

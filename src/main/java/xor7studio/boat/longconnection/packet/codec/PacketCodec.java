@@ -1,4 +1,4 @@
-package xor7studio.boat.packet.codec;
+package xor7studio.boat.longconnection.packet.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -11,8 +11,8 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import xor7studio.boat.packet.Packet;
-import xor7studio.boat.packet.command.PacketCommandManager;
+import xor7studio.boat.longconnection.packet.Packet;
+import xor7studio.boat.longconnection.packet.command.PacketCommandManager;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;

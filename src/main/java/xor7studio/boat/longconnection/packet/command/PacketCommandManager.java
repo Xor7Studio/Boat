@@ -1,11 +1,11 @@
-package xor7studio.boat.packet.command;
+package xor7studio.boat.longconnection.packet.command;
 
 import lombok.Setter;
-import xor7studio.boat.packet.Packet;
-import xor7studio.boat.packet.command.handshake.HandshakeRequestPacket;
-import xor7studio.boat.packet.command.handshake.HandshakeResponsePacket;
-import xor7studio.boat.packet.command.heartbeat.HeartBeatRequestPacket;
-import xor7studio.boat.packet.command.heartbeat.HeartBeatResponsePacket;
+import xor7studio.boat.longconnection.packet.Packet;
+import xor7studio.boat.longconnection.packet.command.handshake.HandshakeRequestPacket;
+import xor7studio.boat.longconnection.packet.command.handshake.HandshakeResponsePacket;
+import xor7studio.boat.longconnection.packet.command.heartbeat.HeartBeatRequestPacket;
+import xor7studio.boat.longconnection.packet.command.heartbeat.HeartBeatResponsePacket;
 
 import java.util.HashMap;
 import java.util.Map;

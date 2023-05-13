@@ -1,4 +1,4 @@
-package xor7studio.boat.packet.command.handshake;
+package xor7studio.boat.longconnection.packet.command.handshake;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;

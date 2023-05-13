@@ -1,4 +1,4 @@
-package xor7studio.boat;
+package xor7studio.boat.authentication;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
