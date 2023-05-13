@@ -111,7 +111,6 @@ public class PacketCodec {
         return res;
     }
     @SuppressWarnings("unchecked")
-
     private <T extends Packet<?>> Schema<T> getSchema(Class<T> clazz) {
         Map<Class<? extends Packet<?>>, Schema<? extends Packet<?>>> schemaMap = schemaMapThreadLocal.get();
         Schema<T> schema = (Schema<T>) schemaMap.get(clazz);
