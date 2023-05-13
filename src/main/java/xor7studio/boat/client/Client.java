@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xor7studio.boat.packet.codec.PacketCodecHandler;
 import xor7studio.boat.packet.command.PacketCommandHandler;
+import xor7studio.boat.packet.command.PacketCommandManager;
 import xor7studio.boat.session.SessionAttributes;
 
 import java.net.InetSocketAddress;
@@ -50,6 +51,7 @@ public class Client {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel channel) {
+                        PacketCommandManager.INSTANCE.set_client(true);
                         ChannelPipeline pipeline = channel.pipeline();
                         channel.attr(SessionAttributes.SESSION_TOKEN).set("My Session Token");
                         pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));

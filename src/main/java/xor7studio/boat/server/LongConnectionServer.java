@@ -11,6 +11,7 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.packet.codec.PacketCodecHandler;
 import xor7studio.boat.packet.command.PacketCommandHandler;
+import xor7studio.boat.packet.command.PacketCommandManager;
 
 import java.net.InetSocketAddress;
 
@@ -29,6 +30,7 @@ public class LongConnectionServer {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel channel) {
+                        PacketCommandManager.INSTANCE.set_client(false);
                         ChannelPipeline pipeline = channel.pipeline();
                         pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));
                         pipeline.addLast(PacketCodecHandler.INSTANCE);

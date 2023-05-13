@@ -5,7 +5,7 @@ import xor7studio.boat.packet.Packet;
 import xor7studio.boat.packet.command.PacketCommand;
 
 @Data
-public class HandshakeRequestPacket extends Packet {
+public class HandshakeRequestPacket extends Packet<HandshakeRequestHandler> {
     public HandshakeRequestPacket(){}
     private String sessionToken;
     @Override
@@ -13,7 +13,6 @@ public class HandshakeRequestPacket extends Packet {
         return PacketCommand.HANDSHAKE_REQUEST;
     }
     @Override
-    @SuppressWarnings("unchecked")
     public HandshakeRequestHandler getHandler() {
         return HandshakeRequestHandler.INSTANCE;
     }
