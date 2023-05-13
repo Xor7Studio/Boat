@@ -14,7 +14,7 @@ public class PacketCommandManager {
     public static final PacketCommandManager INSTANCE = new PacketCommandManager();
     @Setter
     private boolean is_client;
-    private final Map<Byte,Class<? extends Packet>> packets=new HashMap<>();
+    private final Map<Byte,Class<? extends Packet<?>>> packets=new HashMap<>();
     protected PacketCommandManager(){
         if(is_client){
             packets.put(PacketCommand.HEARTBEAT_RESPONSE, HeartBeatResponsePacket.class);
@@ -24,7 +24,7 @@ public class PacketCommandManager {
             packets.put(PacketCommand.HANDSHAKE_REQUEST, HandshakeRequestPacket.class);
         }
     }
-    public Class<? extends Packet> getPacket(byte command){
+    public Class<? extends Packet<?>> getPacket(byte command){
         return packets.get(command);
     }
 }
