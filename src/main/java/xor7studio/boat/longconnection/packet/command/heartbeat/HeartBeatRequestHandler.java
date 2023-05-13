@@ -9,6 +9,6 @@ public class HeartBeatRequestHandler extends SimpleChannelInboundHandler<HeartBe
     public static final HeartBeatRequestHandler INSTANCE = new HeartBeatRequestHandler();
     protected HeartBeatRequestHandler(){}
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, HeartBeatRequestPacket packet) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, HeartBeatRequestPacket packet) {
     }
 }

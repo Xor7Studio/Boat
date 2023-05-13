@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.longconnection.packet.Packet;
 
 @ChannelHandler.Sharable
-public class PacketCommandHandler extends SimpleChannelInboundHandler<Packet> {
+public class PacketCommandHandler extends SimpleChannelInboundHandler<Packet<?>> {
     public static final PacketCommandHandler INSTANCE = new PacketCommandHandler();
     protected PacketCommandHandler(){}
     @Override

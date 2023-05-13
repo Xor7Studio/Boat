@@ -32,13 +32,13 @@ public class PacketCodec {
     public static final PacketCodec INSTANCE = new PacketCodec();
     private final ThreadLocal<LinkedBuffer> bufferThreadLocal =
             ThreadLocal.withInitial(() -> LinkedBuffer.allocate(512));
-    private final ThreadLocal<Map<Class<? extends Packet>, Schema<? extends Packet>>> schemaMapThreadLocal =
+    private final ThreadLocal<Map<Class<? extends Packet<?>>, Schema<? extends Packet<?>>>> schemaMapThreadLocal =
             ThreadLocal.withInitial(HashMap::new);
     @Getter
     @Setter
     private byte[] key=generateKey();
     protected PacketCodec(){}
-    public <T extends Packet> void encode(@NotNull T packet,@NotNull ByteBuf result) {
+    public <T extends Packet<?>> void encode(@NotNull T packet,@NotNull ByteBuf result) {
         @SuppressWarnings("unchecked")
         Class<T> clazz = (Class<T>) packet.getClass();
         LinkedBuffer buffer = bufferThreadLocal.get();
@@ -55,7 +55,7 @@ public class PacketCodec {
         result.writeInt(bytes.length);
         result.writeBytes(bytes);
     }
-    public <T extends Packet> @NotNull T decode(@NotNull ByteBuf byteBuf)
+    public <T extends Packet<?>> @NotNull T decode(@NotNull ByteBuf byteBuf)
             throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         @SuppressWarnings("unchecked")
         Class<T> clazz = (Class<T>) PacketCommandManager.INSTANCE.getPacket(byteBuf.readByte());
@@ -111,8 +111,8 @@ public class PacketCodec {
         return res;
     }
     @SuppressWarnings("unchecked")
-    private <T extends Packet> Schema<T> getSchema(Class<T> clazz) {
-        Map<Class<? extends Packet>, Schema<? extends Packet>> schemaMap = schemaMapThreadLocal.get();
+    private <T extends Packet<?>> Schema<T> getSchema(Class<T> clazz) {
+        Map<Class<? extends Packet<?>>, Schema<? extends Packet<?>>> schemaMap = schemaMapThreadLocal.get();
         Schema<T> schema = (Schema<T>) schemaMap.get(clazz);
         if (schema == null) {
             schema = RuntimeSchema.getSchema(clazz);

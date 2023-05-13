@@ -84,7 +84,7 @@ public class AuthenticationManager {
         Files.write(keyPairFile, (publicKey+":"+privateKey).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
-    private KeyPair generateKeyPair() throws NoSuchAlgorithmException, IOException {
+    private KeyPair generateKeyPair() throws IOException {
         KeyPair result=Keys.keyPairFor(SignatureAlgorithm.RS256);
         saveKeyPairToFile(result);
         return result;
