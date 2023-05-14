@@ -1,3 +1,5 @@
+cert
+key
 target/
 run/
 !.mvn/wrapper/maven-wrapper.jar

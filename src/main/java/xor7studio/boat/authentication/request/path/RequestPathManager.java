@@ -6,10 +6,10 @@ import java.util.Map;
 public class RequestPathManager {
     public static final RequestPathManager INSTANCE = new RequestPathManager();
     protected RequestPathManager(){
-        paths.put(RequestPath.SIGN_IN, SignInHandler.class);
+        pathHandlers.put(RequestPath.SIGN_IN, new SignInHandler());
     }
-    private final Map<String,Class<? extends RequestPathHandler>> paths=new HashMap<>();
-    public Class<? extends RequestPathHandler> getRequest(String path){
-        return paths.get(path);
+    private final Map<String,RequestPathHandler> pathHandlers=new HashMap<>();
+    public RequestPathHandler getRequestPathHandler(String path){
+        return pathHandlers.get(path);
     }
 }

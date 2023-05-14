@@ -1,7 +1,7 @@
 package xor7studio.boat.authentication.request.path;
 
-import io.netty.handler.codec.http.FullHttpRequest;
+import xor7studio.boat.authentication.request.HttpRequest;
 
 public abstract class RequestPathHandler {
-    public abstract void parse(FullHttpRequest request);
+    public abstract String parse(HttpRequest request);
 }

@@ -1,10 +1,11 @@
 package xor7studio.boat.authentication.request.path;
 
-import io.netty.handler.codec.http.FullHttpRequest;
+import xor7studio.boat.authentication.request.HttpRequest;
 
 public class SignInHandler extends RequestPathHandler {
     @Override
-    public void parse(FullHttpRequest request) {
-
+    public String parse(HttpRequest request) {
+        System.out.println("SIGN_IN");
+        return "AAA";
     }
 }
