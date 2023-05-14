@@ -6,9 +6,9 @@ import io.netty.handler.codec.http.FullHttpRequest;
 
 public class RequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     public static final RequestHandler INSTANCE = new RequestHandler();
-    protected RequestHandler (){}
+    protected RequestHandler(){}
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, FullHttpRequest fullHttpRequest) {
-
+//        fullHttpRequest.
     }
 }
