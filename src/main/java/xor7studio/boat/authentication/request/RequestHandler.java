@@ -8,6 +8,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 import org.jetbrains.annotations.NotNull;
+import xor7studio.boat.authentication.request.path.ParseResult;
 import xor7studio.boat.authentication.request.path.RequestPath;
 import xor7studio.boat.authentication.request.path.RequestPathManager;
 
@@ -35,19 +36,21 @@ public class RequestHandler extends SimpleChannelInboundHandler<FullHttpRequest>
             System.out.println("NEED AUTH");
         }
         System.out.println(path);
+        ParseResult parseResult=RequestPathManager.INSTANCE
+                .getRequestPathHandler(path)
+                .parse(fullHttpRequest
+                        .content()
+                        .toString(CharsetUtil.UTF_8));
         FullHttpResponse response=new DefaultFullHttpResponse(
                 HttpVersion.HTTP_1_1,
-                HttpResponseStatus.OK,
-                Unpooled.copiedBuffer(
-                        RequestPathManager.INSTANCE
-                                .getRequestPathHandler(path)
-                                .parse(fullHttpRequest
-                                        .content()
-                                        .toString(CharsetUtil.UTF_8))
-                                .getBytes(StandardCharsets.UTF_8)));
-        response.headers()
-                .set(HttpHeaderNames.CONTENT_TYPE,
-                        "application/json; charset=UTF-8");
+                parseResult.getStatus(),
+                Unpooled.copiedBuffer(parseResult
+                        .getResult()
+                        .getBytes(StandardCharsets.UTF_8)));
+        if(parseResult.getStatus().equals(HttpResponseStatus.OK))
+            response.headers()
+                    .set(HttpHeaderNames.CONTENT_TYPE,
+                            "application/json; charset=UTF-8");
         channelHandlerContext
                 .writeAndFlush(response)
                 .addListener(ChannelFutureListener.CLOSE);

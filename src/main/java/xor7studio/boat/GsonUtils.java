@@ -17,5 +17,5 @@ public class GsonUtils {
                 .setObjectToNumberStrategy(ToNumberPolicy.LAZILY_PARSED_NUMBER)
                 .create();
     }
-    public static final Type MAP_TYPE = new TypeToken<Map<String,Object>>(){}.getType();
+    public static final Type DEFAULT_MAP_TYPE = new TypeToken<Map<String,Object>>(){}.getType();
 }
