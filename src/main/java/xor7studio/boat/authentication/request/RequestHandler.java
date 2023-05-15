@@ -32,9 +32,10 @@ public class RequestHandler extends SimpleChannelInboundHandler<FullHttpRequest>
         path=path.toLowerCase();
         if(!path.equals(RequestPath.SIGN_IN)){
             //AUTH
+            System.out.println("NEED AUTH");
         }
         System.out.println(path);
-        channelHandlerContext.writeAndFlush(new DefaultFullHttpResponse(
+        FullHttpResponse response=new DefaultFullHttpResponse(
                 HttpVersion.HTTP_1_1,
                 HttpResponseStatus.OK,
                 Unpooled.copiedBuffer(
@@ -43,7 +44,12 @@ public class RequestHandler extends SimpleChannelInboundHandler<FullHttpRequest>
                                 .parse(fullHttpRequest
                                         .content()
                                         .toString(CharsetUtil.UTF_8))
-                                .getBytes(StandardCharsets.UTF_8))))
+                                .getBytes(StandardCharsets.UTF_8)));
+        response.headers()
+                .set(HttpHeaderNames.CONTENT_TYPE,
+                        "application/json; charset=UTF-8");
+        channelHandlerContext
+                .writeAndFlush(response)
                 .addListener(ChannelFutureListener.CLOSE);
 
     }

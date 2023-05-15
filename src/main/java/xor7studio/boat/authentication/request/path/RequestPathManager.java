@@ -10,6 +10,6 @@ public class RequestPathManager {
     }
     private final Map<String,RequestPathHandler> pathHandlers=new HashMap<>();
     public RequestPathHandler getRequestPathHandler(String path){
-        return pathHandlers.get(path);
+        return pathHandlers.getOrDefault(path,NotFoundHandler.INSTANCE);
     }
 }
