@@ -1,11 +1,9 @@
 package xor7studio.boat.authentication.request.path;
 
-import xor7studio.boat.authentication.request.HttpRequest;
-
 public class SignInHandler extends RequestPathHandler {
     @Override
-    public String parse(HttpRequest request) {
-        System.out.println("SIGN_IN");
+    public String parse(String body) {
+        System.out.println(body);
         return "AAA";
     }
 }
