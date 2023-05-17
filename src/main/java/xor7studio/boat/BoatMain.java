@@ -7,6 +7,7 @@ public class BoatMain {
     public static void main(String[] args) {
         System.out.println(BoatConfigFile.loadDefaultFile().config.run_as);
         new AuthenticationServer(BoatConfigFile.loadDefaultFile().config.server).start();
+//        System.out.println(HttpRequestUtil.post(""));
 //        BoatConfigFile config=BoatConfigFile.loadDefaultFile();
 //        config.config.costume=new MyConfig();
 //        config.save();

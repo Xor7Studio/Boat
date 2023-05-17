@@ -24,19 +24,25 @@ public class LongConnectionServer {
     public void start(){
         NioEventLoopGroup bossEventLoopGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerEventLoopGroup = new NioEventLoopGroup();
-        ServerBootstrap serverBootstrap = new ServerBootstrap();
-        serverBootstrap.group(bossEventLoopGroup,workerEventLoopGroup)
-                .channel(NioServerSocketChannel.class)
-                .childHandler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    public void initChannel(SocketChannel channel) {
-                        PacketCommandManager.INSTANCE.set_client(false);
-                        ChannelPipeline pipeline = channel.pipeline();
-                        pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));
-                        pipeline.addLast(PacketCodecHandler.INSTANCE);
-                        pipeline.addLast(PacketCommandHandler.INSTANCE);
-                    }
-                });
-        serverBootstrap.bind(listen);
+        try{
+
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+            serverBootstrap.group(bossEventLoopGroup,workerEventLoopGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel channel) {
+                            PacketCommandManager.INSTANCE.set_client(false);
+                            ChannelPipeline pipeline = channel.pipeline();
+                            pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));
+                            pipeline.addLast(PacketCodecHandler.INSTANCE);
+                            pipeline.addLast(PacketCommandHandler.INSTANCE);
+                        }
+                    });
+            serverBootstrap.bind(listen);
+        }finally {
+            bossEventLoopGroup.shutdownGracefully();
+            workerEventLoopGroup.shutdownGracefully();
+        }
     }
 }

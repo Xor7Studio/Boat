@@ -1,5 +1,7 @@
 package xor7studio.boat.authentication.request.path;
 
+import xor7studio.boat.authentication.request.path.signIn.SignInHandler;
+
 import java.util.HashMap;
 import java.util.Map;
 

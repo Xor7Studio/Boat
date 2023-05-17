@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.longconnection.packet.command.handshake.HandshakeRequestPacket;
 import xor7studio.boat.longconnection.session.SessionAttributes;
 
-public class ClientHandler extends ChannelDuplexHandler {
+public class ClientLongConnectionHandler extends ChannelDuplexHandler {
     @Override
     public void channelActive(@NotNull ChannelHandlerContext ctx) {
         HandshakeRequestPacket packet = new HandshakeRequestPacket();

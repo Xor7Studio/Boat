@@ -20,26 +20,14 @@ public class Client {
     private final InetSocketAddress authServerAddress;
     @Getter
     private InetSocketAddress centerServerAddress;
-    @Getter
-    private String appID;
-    private String appToken;
     public Client(InetSocketAddress authServerAddr){
         this.authServerAddress=authServerAddr;
-        if(!createApp()){
-            return;
-        }
-        connectApp();
+
+        startLongConnection();
     }
-    private boolean createApp(){
-        if(true){
-            centerServerAddress=new InetSocketAddress("localhost",11099);
-            appID="";
-            appToken="";
-            return true;
-        }
-        return false;
+    private void startAuthentication(){
     }
-    private void connectApp(){
+    private void startLongConnection(){
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(eventLoopGroup)
@@ -53,7 +41,7 @@ public class Client {
                         pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,1,4));
                         pipeline.addLast(PacketCodecHandler.INSTANCE);
                         pipeline.addLast(PacketCommandHandler.INSTANCE);
-                        pipeline.addLast(new ClientHandler());
+                        pipeline.addLast(new ClientLongConnectionHandler());
                     }
                 });
         bootstrap.connect(centerServerAddress);

@@ -1,18 +1,18 @@
-package xor7studio.boat.authentication.request.path;
+package xor7studio.boat.authentication.request.path.signIn;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 import xor7studio.boat.GsonUtils;
 import xor7studio.boat.authentication.AuthenticationManager;
+import xor7studio.boat.authentication.request.path.ParseResult;
+import xor7studio.boat.authentication.request.path.RequestPathHandler;
 
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
 
 public class SignInHandler extends RequestPathHandler {
     @Override
     public ParseResult parse(String body) {
-        Map<String,Object> data= GsonUtils
-                .getGsonInstance()
-                .fromJson(body, GsonUtils.DEFAULT_MAP_TYPE);
+        SignInRequest request=GsonUtils.getGsonInstance().fromJson(body, SignInRequest.class);
+
         HttpResponseStatus status = HttpResponseStatus.OK;
         AuthenticationManager.INSTANCE
                 .generateBearerToken(
