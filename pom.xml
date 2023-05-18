@@ -93,11 +93,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.3.0</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
-<!--                    <minimizeJar>true</minimizeJar>-->
+                    <minimizeJar>true</minimizeJar>
                     <shadedClassifierName>shaded</shadedClassifierName>
                     <finalName>${project.artifactId}-${project.version}</finalName>
                     <filters>
