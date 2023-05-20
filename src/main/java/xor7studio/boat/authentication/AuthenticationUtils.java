@@ -20,10 +20,10 @@ import java.time.Instant;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
 
-public class AuthenticationManager {
-    public static final AuthenticationManager INSTANCE = new AuthenticationManager();
+public class AuthenticationUtils {
+    public static final AuthenticationUtils INSTANCE = new AuthenticationUtils();
     private final Path keyPairFile=new File("AUTHENTICATION_KEY_PAIR").toPath();
-    protected AuthenticationManager(){
+    protected AuthenticationUtils(){
         try{
             authenticationKeyPair = Files.exists(keyPairFile)?
                     loadKeyPairFromFile(keyPairFile):generateKeyPair();
