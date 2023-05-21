@@ -8,6 +8,7 @@ import xor7studio.boat.authentication.path.PathHandlerResult;
 public class SignInPathHandler extends PathHandler {
     @Override
     public PathHandlerResult parse(FullHttpRequest request) {
-        return PathHandlerResult.builder().status(HttpResponseStatus.OK).build();
+        System.out.println(request.content().toString());
+        return PathHandlerResult.builder().status(HttpResponseStatus.OK).body("aaa").build();
     }
 }

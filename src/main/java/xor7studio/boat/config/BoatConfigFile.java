@@ -14,7 +14,7 @@ public class BoatConfigFile {
     public BoatConfig config;
     private BoatConfigFile(File file){
         this.file = file;
-        config=new Toml().to(BoatConfig.class);
+        config=new Toml().read(file).to(BoatConfig.class);
         if(config.server.tracebacks.size()<2){
             config.server.tracebacks.add(new ServerConfig.TracebackServiceConfig());
             setTracebacksDefault(2);

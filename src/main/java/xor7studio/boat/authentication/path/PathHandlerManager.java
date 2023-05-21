@@ -3,6 +3,7 @@ package xor7studio.boat.authentication.path;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.*;
 import org.jetbrains.annotations.NotNull;
+import xor7studio.boat.authentication.path.signin.SignInPathHandler;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -10,7 +11,9 @@ import java.util.Map;
 
 public class PathHandlerManager {
     public static final PathHandlerManager INSTANCE = new PathHandlerManager();
-    protected PathHandlerManager(){}
+    protected PathHandlerManager(){
+        pathHandlers.put(Path.SIGN_IN,new SignInPathHandler());
+    }
     private final Map<String, PathHandler> pathHandlers=new HashMap<>();
     public FullHttpResponse parseRequest(@NotNull FullHttpRequest request){
         PathHandlerResult parseResult;
@@ -19,7 +22,8 @@ public class PathHandlerManager {
         path=path.toLowerCase();
         System.out.println(path);
         PathHandler handler = pathHandlers.get(path);
-        if(handler==null) parseResult=PathHandlerResult.builder().status(HttpResponseStatus.NOT_FOUND).build();
+        System.out.println(handler);
+        if(handler == null) parseResult=PathHandlerResult.builder().status(HttpResponseStatus.NOT_FOUND).body("").build();
         else if(!path.equals(Path.SIGN_IN)){
             //DO AUTH
             parseResult = PathHandlerResult.builder().build();

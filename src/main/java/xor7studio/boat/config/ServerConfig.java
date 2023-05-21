@@ -16,6 +16,7 @@ public class ServerConfig {
         public AuthenticationServiceConfig(){
             listen="localhost:1109";
         }
+        public boolean enable_ssl=false;
         public String key_file="KEY";
         public String cert_file="CERT";
     }

@@ -20,35 +20,10 @@ import javax.net.ssl.SSLException;
 import java.io.File;
 import java.net.InetSocketAddress;
 
-//
-//import io.netty.handler.ssl.SslContext;
-//import io.netty.handler.ssl.SslContextBuilder;
-//import org.jboss.resteasy.plugins.server.netty.NettyJaxrsServer;
-//import org.jetbrains.annotations.NotNull;
-//import xor7studio.boat.config.BoatConfig;
-//import xor7studio.boat.config.ServerConfig;
-//
-//import javax.net.ssl.SSLException;
-//import javax.ws.rs.ApplicationPath;
-//import javax.ws.rs.core.Application;
-//import java.io.File;
-//import java.net.InetSocketAddress;
-//
-//@ApplicationPath("/")
 public class AuthenticationServer{
     private final ServerConfig config;
-    private final SslContext sslContext;
     public AuthenticationServer(@NotNull ServerConfig config){
         this.config=config;
-        try {
-            sslContext = SslContextBuilder
-                    .forServer(
-                            new File(config.authentication.cert_file),
-                            new File(config.authentication.key_file))
-                    .build();
-        } catch (SSLException e) {
-            throw new RuntimeException(e);
-        }
     }
     public void start(){
         InetSocketAddress listen = BoatConfig.toInetSocketAddress(config.authentication.listen);
@@ -62,7 +37,9 @@ public class AuthenticationServer{
                         @Override
                         protected void initChannel(SocketChannel ch) {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new SslHandler(sslContext.newEngine(ch.alloc())));
+                            if(config.authentication.enable_ssl)
+                                pipeline.addLast(new SslHandler(generateSslContext().newEngine(ch.alloc())));
+//                            else System.out.println("Boat Authentication Service正在以Non-SSL模式运行！");
                             pipeline.addLast(new HttpServerCodec());
                             pipeline.addLast(new HttpObjectAggregator(65536));
                             pipeline.addLast(RequestHandler.INSTANCE);
@@ -74,6 +51,17 @@ public class AuthenticationServer{
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
+        }
+    }
+    public SslContext generateSslContext(){
+        try {
+            return SslContextBuilder
+                    .forServer(
+                            new File(config.authentication.cert_file),
+                            new File(config.authentication.key_file))
+                    .build();
+        } catch (SSLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
