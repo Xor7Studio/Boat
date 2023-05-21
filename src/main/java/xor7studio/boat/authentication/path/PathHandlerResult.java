@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 @Builder
 public class PathHandlerResult {
-    private String body;
+    private String body="";
     private HttpResponseStatus status;
 }

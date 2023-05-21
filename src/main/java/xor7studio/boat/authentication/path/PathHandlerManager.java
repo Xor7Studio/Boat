@@ -18,12 +18,13 @@ public class PathHandlerManager {
     public FullHttpResponse parseRequest(@NotNull FullHttpRequest request){
         PathHandlerResult parseResult;
         String path=request.uri();
-        if(path.endsWith("/")) path=path.substring(0,path.length()-1);
+        if(path.endsWith("/"))
+            path=path.substring(0,path.length()-1);
         path=path.toLowerCase();
         System.out.println(path);
         PathHandler handler = pathHandlers.get(path);
-        System.out.println(handler);
-        if(handler == null) parseResult=PathHandlerResult.builder().status(HttpResponseStatus.NOT_FOUND).body("").build();
+        if(handler == null) parseResult=PathHandlerResult.builder()
+                .status(HttpResponseStatus.NOT_FOUND).build();
         else if(!path.equals(Path.SIGN_IN)){
             //DO AUTH
             parseResult = PathHandlerResult.builder().build();
@@ -31,7 +32,9 @@ public class PathHandlerManager {
         FullHttpResponse response = new DefaultFullHttpResponse(
                 HttpVersion.HTTP_1_1,
                 parseResult.getStatus(),
-                Unpooled.copiedBuffer(parseResult.getBody().getBytes(StandardCharsets.UTF_8)));
+                Unpooled.copiedBuffer(parseResult
+                        .getBody()
+                        .getBytes(StandardCharsets.UTF_8)));
         if(parseResult.getStatus().equals(HttpResponseStatus.OK))
             response.headers().set(HttpHeaderNames.CONTENT_TYPE,
                     "application/json; charset=UTF-8");
