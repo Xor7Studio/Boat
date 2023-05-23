@@ -23,10 +23,12 @@ public class PathHandlerManager {
         path=path.toLowerCase();
         System.out.println(path);
         PathHandler handler = pathHandlers.get(path);
+        System.out.println(handler);
         if(handler == null) parseResult=PathHandlerResult.builder()
                 .status(HttpResponseStatus.NOT_FOUND).build();
         else if(!path.equals(Path.SIGN_IN)){
             //DO AUTH
+            System.out.println("NEED AUTH");
             parseResult = PathHandlerResult.builder().build();
         }else parseResult=handler.parse(request);
         FullHttpResponse response = new DefaultFullHttpResponse(
