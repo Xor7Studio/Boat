@@ -26,11 +26,20 @@ public class PathHandlerManager {
         System.out.println(handler);
         if(handler == null) parseResult=PathHandlerResult.builder()
                 .status(HttpResponseStatus.NOT_FOUND).build();
-        else if(!path.equals(Path.SIGN_IN)){
-            //DO AUTH
-            System.out.println("NEED AUTH");
-            parseResult = PathHandlerResult.builder().build();
-        }else parseResult=handler.parse(request);
+        else {
+            if(!path.equals(Path.SIGN_IN)){
+                String[] authorizationData=request
+                        .headers()
+                        .get("Authorization")
+                        .split(" ");
+                if(authorizationData.length != 2 ||
+                        !authorizationData[0].equalsIgnoreCase("Bearer"))
+                    parseResult = PathHandlerResult.builder()
+                            .status(HttpResponseStatus.UNAUTHORIZED)
+                            .body("").build();
+                else parseResult=handler.parse(request);
+            }else parseResult=handler.parse(request);
+        }
         FullHttpResponse response = new DefaultFullHttpResponse(
                 HttpVersion.HTTP_1_1,
                 parseResult.getStatus(),
