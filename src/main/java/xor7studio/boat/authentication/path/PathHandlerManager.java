@@ -37,7 +37,9 @@ public class PathHandlerManager {
                     parseResult = PathHandlerResult.builder()
                             .status(HttpResponseStatus.UNAUTHORIZED)
                             .body("").build();
-                else parseResult=handler.parse(request);
+                else {
+                    parseResult=handler.parse(PathRequestData.builder()..build());
+                }
             }else parseResult=handler.parse(request);
         }
         FullHttpResponse response = new DefaultFullHttpResponse(
