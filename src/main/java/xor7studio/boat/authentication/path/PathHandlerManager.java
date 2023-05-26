@@ -3,6 +3,7 @@ package xor7studio.boat.authentication.path;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.*;
 import org.jetbrains.annotations.NotNull;
+import xor7studio.boat.authentication.AuthenticationUtils;
 import xor7studio.boat.authentication.path.signin.SignInPathHandler;
 
 import java.nio.charset.StandardCharsets;
@@ -38,9 +39,19 @@ public class PathHandlerManager {
                             .status(HttpResponseStatus.UNAUTHORIZED)
                             .body("").build();
                 else {
-                    parseResult=handler.parse(PathRequestData.builder()..build());
+                    AuthenticationUtils.BearerTokenData tokenData=AuthenticationUtils.INSTANCE
+                            .readBearerToken(authorizationData[1]);
+                    if(tokenData.isValid)
+                        parseResult=handler.parse(PathRequestData.builder()
+                                .httpRequest(request)
+                                .tokenSubject(tokenData.subject).build());
+                    else parseResult= PathHandlerResult.builder()
+                            .body("")
+                            .status(HttpResponseStatus.UNAUTHORIZED).build();
                 }
-            }else parseResult=handler.parse(request);
+            }else parseResult=handler.parse(PathRequestData.builder()
+                    .httpRequest(request)
+                    .tokenSubject("").build());
         }
         FullHttpResponse response = new DefaultFullHttpResponse(
                 HttpVersion.HTTP_1_1,

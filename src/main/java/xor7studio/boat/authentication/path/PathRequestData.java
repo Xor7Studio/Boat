@@ -8,5 +8,5 @@ import lombok.Data;
 @Builder
 public class PathRequestData {
     private FullHttpRequest httpRequest;
-    private String token;
+    private String tokenSubject;
 }

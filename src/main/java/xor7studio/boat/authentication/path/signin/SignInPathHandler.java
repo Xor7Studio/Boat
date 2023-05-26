@@ -8,13 +8,14 @@ import xor7studio.boat.GsonUtils;
 import xor7studio.boat.authentication.AuthenticationUtils;
 import xor7studio.boat.authentication.path.PathHandler;
 import xor7studio.boat.authentication.path.PathHandlerResult;
+import xor7studio.boat.authentication.path.PathRequestData;
 
 import java.nio.charset.StandardCharsets;
 import java.time.temporal.ChronoUnit;
 
 public class SignInPathHandler extends PathHandler {
     @Override
-    public PathHandlerResult parse(@NotNull FullHttpRequest request) {
+    public PathHandlerResult parse(@NotNull PathRequestData request) {
         try{
             System.out.println(request.content().toString(StandardCharsets.UTF_8));
             SignInRequestData requestData =
