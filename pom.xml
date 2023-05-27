@@ -8,6 +8,34 @@
     <artifactId>Boat</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Minecraft多人游戏实用工具</description>
+    <url>https://github.com/Xor7Studio/Boat</url>
+
+    <licenses>
+        <license>
+            <name>The MIT License</name>
+            <url>https://opensource.org/license/mit/</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>MC_XiaoHei</name>
+            <email>xiaohei.xor7studio@foxmail.com</email>
+            <roles>
+                <role>Core Dev</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>https://github.com/Xor7Studio/Boat.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:Xor7Studio/Boat.git</developerConnection>
+        <url>https://github.com/xor7studio/Boat</url>
+    </scm>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -82,7 +110,6 @@
             </exclusions>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
