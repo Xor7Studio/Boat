@@ -77,13 +77,11 @@ public class AuthenticationUtils {
         PrivateKey privateKey = keyFactory.generatePrivate(privateKeySpec);
         return new KeyPair(publicKey, privateKey);
     }
-
     private void saveKeyPairToFile(@NotNull KeyPair keyPair) throws IOException {
         String publicKey = Encoders.BASE64.encode(keyPair.getPublic().getEncoded());
         String privateKey = Encoders.BASE64.encode(keyPair.getPrivate().getEncoded());
         Files.write(keyPairFile, (publicKey+":"+privateKey).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
-
     private KeyPair generateKeyPair() throws IOException {
         KeyPair result=Keys.keyPairFor(SignatureAlgorithm.RS256);
         saveKeyPairToFile(result);

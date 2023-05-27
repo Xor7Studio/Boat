@@ -39,7 +39,6 @@ public class AuthenticationServer{
                             ChannelPipeline pipeline = ch.pipeline();
                             if(config.authentication.enable_ssl)
                                 pipeline.addLast(new SslHandler(generateSslContext().newEngine(ch.alloc())));
-//                            else System.out.println("Boat Authentication Service正在以Non-SSL模式运行！");
                             pipeline.addLast(new HttpServerCodec());
                             pipeline.addLast(new HttpObjectAggregator(65536));
                             pipeline.addLast(RequestHandler.INSTANCE);
