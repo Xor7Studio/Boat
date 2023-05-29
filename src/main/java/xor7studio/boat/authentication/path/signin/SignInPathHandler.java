@@ -1,7 +1,6 @@
 package xor7studio.boat.authentication.path.signin;
 
 import com.google.gson.JsonSyntaxException;
-import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.GsonUtils;
@@ -17,10 +16,12 @@ public class SignInPathHandler extends PathHandler {
     @Override
     public PathHandlerResult parse(@NotNull PathRequestData request) {
         try{
-            System.out.println(request.content().toString(StandardCharsets.UTF_8));
+            System.out.println(request.getHttpRequest().content().toString(StandardCharsets.UTF_8));
             SignInRequestData requestData =
                     GsonUtils.getGsonInstance().fromJson(
-                            request.content().toString(StandardCharsets.UTF_8),
+                            request.getHttpRequest()
+                                    .content()
+                                    .toString(StandardCharsets.UTF_8),
                             SignInRequestData.class);
             boolean isValid = true;
             String uuid="uuid";
