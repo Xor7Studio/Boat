@@ -1,6 +1,5 @@
 package xor7studio.boat.authentication.path.signin;
 
-import com.google.gson.JsonSyntaxException;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.GsonUtils;
@@ -25,13 +24,13 @@ public class SignInPathHandler extends PathHandler {
                             SignInRequestData.class);
             boolean isValid = true;
             String uuid="uuid";
+            System.out.println(requestData.expire_in);
             //DO AUTH
             SignInResponseData responseData = new SignInResponseData();
             responseData.token = AuthenticationUtils.INSTANCE.generateBearerToken(
                     uuid,
                     requestData.expire_in,
                     ChronoUnit.DAYS);
-            System.out.println("AAA");
             if(isValid) return PathHandlerResult.builder()
                     .status(HttpResponseStatus.OK)
                     .body(GsonUtils.getGsonInstance().toJson(
@@ -40,7 +39,8 @@ public class SignInPathHandler extends PathHandler {
             else return PathHandlerResult.builder()
                     .body("")
                     .status(HttpResponseStatus.UNAUTHORIZED).build();
-        }catch (JsonSyntaxException e){
+        }catch (Exception e){
+            e.printStackTrace();
             return PathHandlerResult.builder()
                     .body("")
                     .status(HttpResponseStatus.BAD_REQUEST).build();
