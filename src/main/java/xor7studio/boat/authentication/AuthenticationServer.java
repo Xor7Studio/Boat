@@ -12,21 +12,17 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.SslHandler;
-import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.config.BoatConfig;
-import xor7studio.boat.config.ServerConfig;
+import xor7studio.boat.config.BoatConfigFile;
 
 import javax.net.ssl.SSLException;
 import java.io.File;
 import java.net.InetSocketAddress;
 
 public class AuthenticationServer{
-    private final ServerConfig config;
-    public AuthenticationServer(@NotNull ServerConfig config){
-        this.config=config;
-    }
+    public AuthenticationServer(){}
     public void start(){
-        InetSocketAddress listen = BoatConfig.toInetSocketAddress(config.authentication.listen);
+        InetSocketAddress listen = BoatConfig.toInetSocketAddress(BoatConfigFile.INSTANCE.config.server.authentication.listen);
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -37,7 +33,7 @@ public class AuthenticationServer{
                         @Override
                         protected void initChannel(SocketChannel ch) {
                             ChannelPipeline pipeline = ch.pipeline();
-                            if(config.authentication.enable_ssl)
+                            if(BoatConfigFile.INSTANCE.config.server.authentication.enable_ssl)
                                 pipeline.addLast(new SslHandler(generateSslContext().newEngine(ch.alloc())));
                             pipeline.addLast(new HttpServerCodec());
                             pipeline.addLast(new HttpObjectAggregator(65536));
@@ -56,8 +52,8 @@ public class AuthenticationServer{
         try {
             return SslContextBuilder
                     .forServer(
-                            new File(config.authentication.cert_file),
-                            new File(config.authentication.key_file))
+                            new File(BoatConfigFile.INSTANCE.config.server.authentication.cert_file),
+                            new File(BoatConfigFile.INSTANCE.config.server.authentication.key_file))
                     .build();
         } catch (SSLException e) {
             throw new RuntimeException(e);

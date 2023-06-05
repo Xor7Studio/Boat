@@ -1,6 +1,5 @@
 package xor7studio.boat.authentication.path;
 
-import com.google.gson.JsonSyntaxException;
 import io.jsonwebtoken.JwtException;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.*;
@@ -61,7 +60,7 @@ public class PathHandlerManager {
                 parseResult = PathHandlerResult.builder()
                         .body("")
                         .status(HttpResponseStatus.UNAUTHORIZED).build();
-            }catch (JsonSyntaxException ignore){
+            }catch (Exception ignore){
                 parseResult = PathHandlerResult.builder()
                         .body("")
                         .status(HttpResponseStatus.BAD_REQUEST).build();
