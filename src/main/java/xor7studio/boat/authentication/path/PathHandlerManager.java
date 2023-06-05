@@ -5,9 +5,10 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.*;
 import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.authentication.AuthenticationUtils;
-import xor7studio.boat.authentication.path.gettracebackaddress.GetTracebackAddressPathHandler;
+import xor7studio.boat.authentication.path.create_session.CreateSessionPathHandler;
+import xor7studio.boat.authentication.path.get_traceback_address.GetTracebackAddressPathHandler;
 import xor7studio.boat.authentication.path.refresh.RefreshPathHandler;
-import xor7studio.boat.authentication.path.signin.SignInPathHandler;
+import xor7studio.boat.authentication.path.sign_in.SignInPathHandler;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class PathHandlerManager {
         pathHandlers.put(Path.SIGN_IN,new SignInPathHandler());
         pathHandlers.put(Path.REFRESH,new RefreshPathHandler());
         pathHandlers.put(Path.GET_TRACEBACK_ADDRESS,new GetTracebackAddressPathHandler());
+        pathHandlers.put(Path.CREATE_SESSION,new CreateSessionPathHandler());
     }
     private final Map<String, PathHandler> pathHandlers=new HashMap<>();
     public FullHttpResponse parseRequest(@NotNull FullHttpRequest request){

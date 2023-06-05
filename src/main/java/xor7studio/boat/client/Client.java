@@ -9,10 +9,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import lombok.Getter;
-import xor7studio.boat.longconnection.packet.codec.PacketCodecHandler;
-import xor7studio.boat.longconnection.packet.command.PacketCommandHandler;
-import xor7studio.boat.longconnection.packet.command.PacketCommandManager;
-import xor7studio.boat.longconnection.session.SessionAttributes;
+import xor7studio.boat.long_connection.packet.codec.PacketCodecHandler;
+import xor7studio.boat.long_connection.packet.command.PacketCommandHandler;
+import xor7studio.boat.long_connection.packet.command.PacketCommandManager;
+import xor7studio.boat.long_connection.session.SessionAttributes;
 
 import java.net.InetSocketAddress;
 

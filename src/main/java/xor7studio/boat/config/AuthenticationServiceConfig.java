@@ -5,7 +5,7 @@ public class AuthenticationServiceConfig extends ServiceConfig {
         listen = "localhost:1109";
     }
 
-    public boolean enable_ssl = false;
+    public Boolean enable_ssl = false;
     public String key_file = "KEY";
     public String cert_file = "CERT";
 }

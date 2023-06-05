@@ -4,4 +4,5 @@ public interface Path {
     String SIGN_IN="/sign-in";
     String REFRESH="/refresh";
     String GET_TRACEBACK_ADDRESS="/get-traceback-address";
+    String CREATE_SESSION="/create-session";
 }
