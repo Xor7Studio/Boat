@@ -35,7 +35,7 @@ public class AuthenticationUtils {
     public PublicKey getAuthenticationPublicKey(){
         return authenticationKeyPair.getPublic();
     }
-    public String generateBearerToken(String data,long expirationTime, TemporalUnit unit){
+    public String generateBearerToken(String data,int expirationTime, TemporalUnit unit){
         Instant now = Instant.now();
         Instant expiration = now.plus(expirationTime, unit);
         return Jwts.builder()
@@ -55,13 +55,13 @@ public class AuthenticationUtils {
                     .setSigningKey(publicKey)
                     .requireIssuer("Boat")
                     .requireAudience("Authentication")
-                    .requireExpiration(Date.from(Instant.now()))
-                    .setAllowedClockSkewSeconds(5*60)
+                    .setAllowedClockSkewSeconds(60)
                     .build()
                     .parseClaimsJws(token);
             Claims claims = claimsJws.getBody();
             result.subject=claims.getSubject();
-        }catch (JwtException e){
+        }catch (Exception e){
+            e.printStackTrace();
             result.isValid=false;
         }
         return result;

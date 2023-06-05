@@ -14,36 +14,28 @@ import java.time.temporal.ChronoUnit;
 public class SignInPathHandler extends PathHandler {
     @Override
     public PathHandlerResult parse(@NotNull PathRequestData request) {
-        try{
-            System.out.println(request.getHttpRequest().content().toString(StandardCharsets.UTF_8));
-            SignInRequestData requestData =
-                    GsonUtils.getGsonInstance().fromJson(
-                            request.getHttpRequest()
-                                    .content()
-                                    .toString(StandardCharsets.UTF_8),
-                            SignInRequestData.class);
-            boolean isValid = true;
-            String uuid="uuid";
-            System.out.println(requestData.expire_in);
-            //DO AUTH
-            SignInResponseData responseData = new SignInResponseData();
-            responseData.token = AuthenticationUtils.INSTANCE.generateBearerToken(
-                    uuid,
-                    requestData.expire_in,
-                    ChronoUnit.DAYS);
-            if(isValid) return PathHandlerResult.builder()
-                    .status(HttpResponseStatus.OK)
-                    .body(GsonUtils.getGsonInstance().toJson(
-                            responseData,
-                            SignInResponseData.class)).build();
-            else return PathHandlerResult.builder()
-                    .body("")
-                    .status(HttpResponseStatus.UNAUTHORIZED).build();
-        }catch (Exception e){
-            e.printStackTrace();
-            return PathHandlerResult.builder()
-                    .body("")
-                    .status(HttpResponseStatus.BAD_REQUEST).build();
-        }
+        SignInRequestData requestData =
+                GsonUtils.fromJson(
+                        GsonUtils.getGsonInstance(),
+                        request.getHttpRequest()
+                                .content()
+                                .toString(StandardCharsets.UTF_8),
+                        SignInRequestData.class);
+        boolean isValid = true;
+        String uuid="uuid";
+        //DO AUTH
+        SignInResponseData responseData = new SignInResponseData();
+        responseData.token = AuthenticationUtils.INSTANCE.generateBearerToken(
+                uuid,
+                requestData.expire_in,
+                ChronoUnit.DAYS);
+        if(isValid) return PathHandlerResult.builder()
+                .status(HttpResponseStatus.OK)
+                .body(GsonUtils.getGsonInstance().toJson(
+                        responseData,
+                        SignInResponseData.class)).build();
+        else return PathHandlerResult.builder()
+                .body("")
+                .status(HttpResponseStatus.UNAUTHORIZED).build();
     }
 }

@@ -1,5 +1,6 @@
 package xor7studio.boat.authentication.path.refresh;
 
+import io.netty.handler.codec.http.HttpResponseStatus;
 import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.GsonUtils;
 import xor7studio.boat.authentication.AuthenticationUtils;
@@ -14,7 +15,8 @@ public class RefreshPathHandler extends PathHandler {
     @Override
     public PathHandlerResult parse(@NotNull PathRequestData request){
         RefreshRequestData requestData =
-                GsonUtils.getGsonInstance().fromJson(
+                GsonUtils.fromJson(
+                        GsonUtils.getGsonInstance(),
                         request.getHttpRequest()
                                 .content()
                                 .toString(StandardCharsets.UTF_8),
@@ -27,6 +29,7 @@ public class RefreshPathHandler extends PathHandler {
         return PathHandlerResult.builder()
                 .body(GsonUtils.getGsonInstance().toJson(
                         responseData,
-                        RefreshResponseData.class)).build();
+                        RefreshResponseData.class))
+                .status(HttpResponseStatus.OK).build();
     }
 }
