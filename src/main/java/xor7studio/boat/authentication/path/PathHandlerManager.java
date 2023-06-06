@@ -58,11 +58,11 @@ public class PathHandlerManager {
                 }else parseResult=handler.parse(PathRequestData.builder()
                         .httpRequest(request)
                         .tokenSubject("").build());
-            }catch (JwtException ignore){
+            }catch (JwtException ignored){
                 parseResult = PathHandlerResult.builder()
                         .body("")
                         .status(HttpResponseStatus.UNAUTHORIZED).build();
-            }catch (Exception ignore){
+            }catch (Exception ignored){
                 parseResult = PathHandlerResult.builder()
                         .body("")
                         .status(HttpResponseStatus.BAD_REQUEST).build();

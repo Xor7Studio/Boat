@@ -16,7 +16,6 @@ public class SignInPathHandler extends PathHandler {
     public PathHandlerResult parse(@NotNull PathRequestData request) {
         SignInRequestData requestData =
                 GsonUtils.fromJson(
-                        GsonUtils.getGsonInstance(),
                         request.getHttpRequest()
                                 .content()
                                 .toString(StandardCharsets.UTF_8),

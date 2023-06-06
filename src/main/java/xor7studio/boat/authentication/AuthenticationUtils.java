@@ -52,7 +52,7 @@ public class AuthenticationUtils {
                     .setSigningKey(publicKey)
                     .requireIssuer("Boat")
                     .requireAudience("Authentication")
-                    .setAllowedClockSkewSeconds(60)
+                    .setAllowedClockSkewSeconds(30)
                     .build()
                     .parseClaimsJws(token);
             Claims claims = claimsJws.getBody();

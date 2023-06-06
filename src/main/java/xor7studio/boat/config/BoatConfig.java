@@ -14,6 +14,7 @@ public class BoatConfig {
     @Contract("_ -> new")
     public static @NotNull InetSocketAddress toInetSocketAddress(@NotNull String address){
         if(!address.contains(":")) throw new IllegalArgumentException("Listen必须含有端口");
+        if(address.contains("//")) address=address.split("//")[1];
         String[] tmp=address.split(":");
         return new InetSocketAddress(tmp[0],Integer.parseInt(tmp[1]));
     }

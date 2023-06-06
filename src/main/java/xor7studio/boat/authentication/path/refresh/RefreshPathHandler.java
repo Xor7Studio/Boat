@@ -16,7 +16,6 @@ public class RefreshPathHandler extends PathHandler {
     public PathHandlerResult parse(@NotNull PathRequestData request){
         RefreshRequestData requestData =
                 GsonUtils.fromJson(
-                        GsonUtils.getGsonInstance(),
                         request.getHttpRequest()
                                 .content()
                                 .toString(StandardCharsets.UTF_8),

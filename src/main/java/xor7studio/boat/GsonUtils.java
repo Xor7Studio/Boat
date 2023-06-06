@@ -17,8 +17,8 @@ public class GsonUtils {
                 .setObjectToNumberStrategy(ToNumberPolicy.LAZILY_PARSED_NUMBER)
                 .create();
     }
-    public static <T> T fromJson(@NotNull Gson gson, String json, Type type){
-        T res = gson.fromJson(json,type);
+    public static <T> T fromJson(String json, Type type){
+        T res = getGsonInstance().fromJson(json,type);
         for(Field field:res.getClass().getDeclaredFields()){
             field.setAccessible(true);
             try {

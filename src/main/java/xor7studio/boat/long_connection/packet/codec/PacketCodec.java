@@ -8,11 +8,11 @@ import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import xor7studio.boat.long_connection.packet.Packet;
 import xor7studio.boat.long_connection.packet.command.PacketCommandManager;
+import xor7studio.boat.long_connection.packet.command.handshake.HandshakeRequestPacket;
+import xor7studio.boat.long_connection.packet.command.handshake.HandshakeResponsePacket;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -36,7 +36,7 @@ public class PacketCodec {
             ThreadLocal.withInitial(HashMap::new);
     @Getter
     @Setter
-    private byte[] key=generateKey();
+    private byte[] key;
     protected PacketCodec(){}
     public <T extends Packet<?>> void encode(@NotNull T packet,@NotNull ByteBuf result) {
         @SuppressWarnings("unchecked")
@@ -44,11 +44,14 @@ public class PacketCodec {
         LinkedBuffer buffer = bufferThreadLocal.get();
         Schema<T> schema = getSchema(clazz);
         byte[] bytes;
-        try {
-            bytes = encrypt(ProtostuffIOUtil.toByteArray(packet, schema, buffer));
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException |
-                 InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            throw new RuntimeException(e);
+        bytes=ProtostuffIOUtil.toByteArray(packet, schema, buffer);
+        if(!(clazz.equals(HandshakeResponsePacket.class) || clazz.equals(HandshakeRequestPacket.class))){
+            try {
+                bytes = encrypt(bytes);
+            } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException |
+                     InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
+                throw new RuntimeException(e);
+            }
         }
         buffer.clear();
         result.writeByte(packet.getCommand());
@@ -63,7 +66,12 @@ public class PacketCodec {
         T packet = clazz.getConstructor().newInstance();
         Schema<T> schema = getSchema(clazz);
         try {
-            ProtostuffIOUtil.mergeFrom(decrypt(byteBuf), packet, schema);
+            if(clazz.equals(HandshakeResponsePacket.class) || clazz.equals(HandshakeRequestPacket.class)){
+                byte[] var = new byte[byteBuf.readableBytes()];
+                byteBuf.readBytes(var);
+                ProtostuffIOUtil.mergeFrom(var, packet, schema);
+            }
+            else ProtostuffIOUtil.mergeFrom(decrypt(byteBuf), packet, schema);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException |
                  InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException(e);
@@ -119,15 +127,5 @@ public class PacketCodec {
             schemaMap.put(clazz, schema);
         }
         return schema;
-    }
-    @Contract(value = " -> new", pure = true)
-    @SneakyThrows
-    private byte @NotNull [] generateKey() {
-//        SecureRandom secureRandom = new SecureRandom();
-//        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-//        keyGenerator.init(128, secureRandom);
-//        SecretKey secretKey = keyGenerator.generateKey();
-//        return secretKey.getEncoded();
-        return "boatboatboatboat".getBytes();
     }
 }

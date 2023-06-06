@@ -20,12 +20,12 @@ public class CreateSessionPathHandler extends PathHandler {
                     .status(HttpResponseStatus.INTERNAL_SERVER_ERROR).body("").build();
         CreateSessionRequestData requestData =
                 GsonUtils.fromJson(
-                        GsonUtils.getGsonInstance(),
                         request.getHttpRequest()
                                 .content()
                                 .toString(StandardCharsets.UTF_8),
                         CreateSessionRequestData.class);
-        if(!requestData.nat_type.equals("H") && !requestData.nat_type.equals("N"))
+        if(!requestData.nat_type.equals("H") && !requestData.nat_type.equals("N") ||
+                requestData.session_pwd.length()!=16)
             return PathHandlerResult.builder()
                     .status(HttpResponseStatus.BAD_REQUEST).body("").build();
         CreateSessionResponseData responseData = new CreateSessionResponseData();

@@ -22,8 +22,13 @@ public class BoatConfigFile {
             }
         }
         config=new Toml().read(file).to(BoatConfig.class);
-        for(int i=0;config.server.tracebacks.size()<2;i++)
-            config.server.tracebacks.add(new TracebackServiceConfig(11097+i));
+        if(config.run_as.equals("client"))
+            config.server=null;
+        else {
+            config.client=null;
+            for(int i=0;config.server.tracebacks.size()<2;i++)
+                config.server.tracebacks.add(new TracebackServiceConfig(11097+i));
+        }
         save();
     }
     public void save(){

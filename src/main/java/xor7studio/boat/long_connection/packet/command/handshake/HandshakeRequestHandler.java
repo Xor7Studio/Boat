@@ -11,6 +11,7 @@ public class HandshakeRequestHandler extends SimpleChannelInboundHandler<Handsha
     @Override
     protected void channelRead0(@NotNull ChannelHandlerContext ctx, @NotNull HandshakeRequestPacket packet) {
         ctx.channel().attr(SessionAttributes.SESSION_TOKEN).set(packet.getSessionToken());
+        //TODO 解析token
         HandshakeResponsePacket response = new HandshakeResponsePacket();
         response.setSuccess(true);
     }
