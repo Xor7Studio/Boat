@@ -109,6 +109,22 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>cn.zhxu</groupId>
+            <artifactId>okhttps</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.zhxu</groupId>
+            <artifactId>okhttps-gson</artifactId>
+            <version>4.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.code.gson</groupId>
+                    <artifactId>gson</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

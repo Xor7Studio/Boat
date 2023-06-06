@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit;
 public class CreateSessionPathHandler extends PathHandler {
     @Override
     public PathHandlerResult parse(@NotNull PathRequestData request) {
-        if(!BoatConfigFile.INSTANCE.config.server.longConnection.run)
+        if(!BoatConfigFile.DEFAULT.config.server.longConnection.run)
             return PathHandlerResult.builder()
                     .status(HttpResponseStatus.INTERNAL_SERVER_ERROR).body("").build();
         CreateSessionRequestData requestData =
@@ -34,10 +34,10 @@ public class CreateSessionPathHandler extends PathHandler {
                         request.getTokenSubject(),
                         requestData.nat_type,
                         requestData.session_pwd),
-                BoatConfigFile.INSTANCE.config.server.session_key_expire_in,
+                BoatConfigFile.DEFAULT.config.server.session_key_expire_in,
                 ChronoUnit.SECONDS);
-        responseData.expire_in=BoatConfigFile.INSTANCE.config.server.session_key_expire_in;
-        responseData.address=BoatConfigFile.INSTANCE.config.server.longConnection.listen;
+        responseData.expire_in=BoatConfigFile.DEFAULT.config.server.session_key_expire_in;
+        responseData.address=BoatConfigFile.DEFAULT.config.server.longConnection.listen;
         return PathHandlerResult.builder()
                 .status(HttpResponseStatus.OK)
                 .body(GsonUtils.getGsonInstance().toJson(

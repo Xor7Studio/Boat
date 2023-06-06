@@ -22,7 +22,7 @@ import java.net.InetSocketAddress;
 public class AuthenticationServer{
     public AuthenticationServer(){}
     public void start(){
-        InetSocketAddress listen = BoatConfig.toInetSocketAddress(BoatConfigFile.INSTANCE.config.server.authentication.listen);
+        InetSocketAddress listen = BoatConfig.toInetSocketAddress(BoatConfigFile.DEFAULT.config.server.authentication.listen);
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -33,7 +33,7 @@ public class AuthenticationServer{
                         @Override
                         protected void initChannel(SocketChannel ch) {
                             ChannelPipeline pipeline = ch.pipeline();
-                            if(BoatConfigFile.INSTANCE.config.server.authentication.enable_ssl)
+                            if(BoatConfigFile.DEFAULT.config.server.authentication.enable_ssl)
                                 pipeline.addLast(new SslHandler(generateSslContext().newEngine(ch.alloc())));
                             pipeline.addLast(new HttpServerCodec());
                             pipeline.addLast(new HttpObjectAggregator(65536));
@@ -52,8 +52,8 @@ public class AuthenticationServer{
         try {
             return SslContextBuilder
                     .forServer(
-                            new File(BoatConfigFile.INSTANCE.config.server.authentication.cert_file),
-                            new File(BoatConfigFile.INSTANCE.config.server.authentication.key_file))
+                            new File(BoatConfigFile.DEFAULT.config.server.authentication.cert_file),
+                            new File(BoatConfigFile.DEFAULT.config.server.authentication.key_file))
                     .build();
         } catch (SSLException e) {
             throw new RuntimeException(e);

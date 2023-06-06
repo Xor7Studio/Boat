@@ -32,9 +32,6 @@ public class AuthenticationUtils {
         }
     }
     private final KeyPair authenticationKeyPair;
-    public PublicKey getAuthenticationPublicKey(){
-        return authenticationKeyPair.getPublic();
-    }
     public String generateBearerToken(String data,int expirationTime, TemporalUnit unit){
         Instant now = Instant.now();
         Instant expiration = now.plus(expirationTime, unit);

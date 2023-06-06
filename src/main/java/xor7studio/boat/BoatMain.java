@@ -1,16 +1,19 @@
 package xor7studio.boat;
 
 import xor7studio.boat.authentication.AuthenticationServer;
+import xor7studio.boat.client.Client;
 import xor7studio.boat.config.BoatConfigFile;
 import xor7studio.boat.config.TracebackServiceConfig;
 
 public class BoatMain {
     public static void main(String[] args) {
-        System.out.println(BoatConfigFile.INSTANCE.config.run_as);
-        for(TracebackServiceConfig cfg:BoatConfigFile.INSTANCE.config.server.tracebacks){
+        System.out.println(BoatConfigFile.DEFAULT.config.run_as);
+        for(TracebackServiceConfig cfg:BoatConfigFile.DEFAULT.config.server.tracebacks){
             System.out.println(cfg.listen);
         }
-        new AuthenticationServer().start();
+        if(BoatConfigFile.DEFAULT.config.run_as.equals("server"))
+            new AuthenticationServer().start();
+        else new Client().start();
 
 //        System.out.println(HttpRequestUtil.post(""));
 //        BoatConfigFile config=BoatConfigFile.loadDefaultFile();

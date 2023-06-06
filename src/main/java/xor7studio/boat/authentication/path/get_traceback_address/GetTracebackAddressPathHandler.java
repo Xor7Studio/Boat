@@ -16,7 +16,7 @@ public class GetTracebackAddressPathHandler extends PathHandler {
     public static final CopyOnWriteArrayList<TracebackServiceConfig> validTracebackServices = new CopyOnWriteArrayList<>();
     private static boolean tracebackServiceValid=false;
     public GetTracebackAddressPathHandler() {
-        for(TracebackServiceConfig serviceConfig: BoatConfigFile.INSTANCE.config.server.tracebacks)
+        for(TracebackServiceConfig serviceConfig: BoatConfigFile.DEFAULT.config.server.tracebacks)
             if(serviceConfig.run)
                 validTracebackServices.add(serviceConfig);
         if(validTracebackServices.size()>=2) tracebackServiceValid=true;

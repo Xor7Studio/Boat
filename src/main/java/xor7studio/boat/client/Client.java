@@ -9,6 +9,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import lombok.Getter;
+import xor7studio.boat.config.BoatConfig;
+import xor7studio.boat.config.BoatConfigFile;
 import xor7studio.boat.long_connection.packet.codec.PacketCodecHandler;
 import xor7studio.boat.long_connection.packet.command.PacketCommandHandler;
 import xor7studio.boat.long_connection.packet.command.PacketCommandManager;
@@ -19,13 +21,16 @@ import java.net.InetSocketAddress;
 public class Client {
     private final InetSocketAddress authServerAddress;
     @Getter
-    private InetSocketAddress centerServerAddress;
-    public Client(InetSocketAddress authServerAddr){
-        this.authServerAddress=authServerAddr;
-
+    private InetSocketAddress longConnectionServerAddress;
+    public Client(){
+        authServerAddress = BoatConfig.toInetSocketAddress(
+                BoatConfigFile.DEFAULT.config.client.boat_server);
+    }
+    public void start(){
+        doAuthentication();
         startLongConnection();
     }
-    private void startAuthentication(){
+    private void doAuthentication(){
     }
     private void startLongConnection(){
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
@@ -44,6 +49,6 @@ public class Client {
                         pipeline.addLast(new ClientLongConnectionHandler());
                     }
                 });
-        bootstrap.connect(centerServerAddress);
+        bootstrap.connect(longConnectionServerAddress);
     }
 }

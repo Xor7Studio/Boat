@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.net.InetSocketAddress;
 
 public class BoatConfig {
+    public static final String  DEFAULT_SERVER_ADDRESS_HOST="localhost.xor7.cn";
     public String run_as="client";
     public ServerConfig server=new ServerConfig();
     public ClientConfig client=new ClientConfig();

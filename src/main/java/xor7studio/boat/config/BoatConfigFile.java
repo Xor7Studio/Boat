@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class BoatConfigFile {
-    public static final BoatConfigFile INSTANCE = new BoatConfigFile();
+    public static final BoatConfigFile DEFAULT = new BoatConfigFile();
     private final File file;
     private final TomlWriter tomlWriter = new TomlWriter();
     public BoatConfig config;
