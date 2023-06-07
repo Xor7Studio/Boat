@@ -1,4 +1,4 @@
-package xor7studio.boat.client;
+package xor7studio.boat.long_connection;
 
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;

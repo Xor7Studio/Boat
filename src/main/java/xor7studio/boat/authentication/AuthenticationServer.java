@@ -17,12 +17,10 @@ import xor7studio.boat.config.BoatConfigFile;
 
 import javax.net.ssl.SSLException;
 import java.io.File;
-import java.net.InetSocketAddress;
 
 public class AuthenticationServer{
     public AuthenticationServer(){}
     public void start(){
-        InetSocketAddress listen = BoatConfig.toInetSocketAddress(BoatConfigFile.DEFAULT.config.server.authentication.listen);
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -40,7 +38,12 @@ public class AuthenticationServer{
                             pipeline.addLast(RequestHandler.INSTANCE);
                         }
                     });
-            bootstrap.bind(listen).sync().channel().closeFuture().sync();
+            bootstrap.bind(BoatConfig.toInetSocketAddress(
+                    BoatConfigFile.DEFAULT.config.server.authentication.listen))
+                    .sync()
+                    .channel()
+                    .closeFuture()
+                    .sync();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {

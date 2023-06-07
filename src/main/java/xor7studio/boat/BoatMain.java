@@ -1,7 +1,6 @@
 package xor7studio.boat;
 
 import xor7studio.boat.authentication.AuthenticationServer;
-import xor7studio.boat.client.Client;
 import xor7studio.boat.config.BoatConfigFile;
 
 public class BoatMain {
@@ -9,7 +8,7 @@ public class BoatMain {
         System.out.println(BoatConfigFile.DEFAULT.config.run_as);
         if(BoatConfigFile.DEFAULT.config.run_as.equals("server"))
             new AuthenticationServer().start();
-        else new Client().start();
+        else new BoatClient().start();
 
 //        System.out.println(HttpRequestUtil.post(""));
 //        BoatConfigFile config=BoatConfigFile.loadDefaultFile();

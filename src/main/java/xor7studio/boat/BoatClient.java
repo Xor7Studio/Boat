@@ -1,4 +1,4 @@
-package xor7studio.boat.client;
+package xor7studio.boat;
 
 import cn.zhxu.okhttps.*;
 import cn.zhxu.okhttps.gson.GsonMsgConvertor;
@@ -14,7 +14,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import org.jetbrains.annotations.NotNull;
-import xor7studio.boat.GsonUtils;
 import xor7studio.boat.authentication.AuthenticationTokenData;
 import xor7studio.boat.authentication.path.Path;
 import xor7studio.boat.authentication.path.create_session.CreateSessionRequestData;
@@ -24,6 +23,7 @@ import xor7studio.boat.authentication.path.refresh.RefreshRequestData;
 import xor7studio.boat.authentication.path.refresh.RefreshResponseData;
 import xor7studio.boat.authentication.path.sign_in.SignInRequestData;
 import xor7studio.boat.authentication.path.sign_in.SignInResponseData;
+import xor7studio.boat.long_connection.ClientLongConnectionHandler;
 import xor7studio.boat.config.BoatConfig;
 import xor7studio.boat.config.BoatConfigFile;
 import xor7studio.boat.long_connection.packet.codec.PacketCodecHandler;
@@ -36,13 +36,13 @@ import javax.crypto.SecretKey;
 import java.net.InetSocketAddress;
 import java.security.NoSuchAlgorithmException;
 
-public class Client {
+public class BoatClient {
     private InetSocketAddress longConnectionAddress;
     private String[] tracebackAddress;
     private final HTTP http;
     private String nat_type="E";
     private String session_token;
-    public Client(){
+    public BoatClient(){
         http = HTTP.builder()
                 .addMsgConvertor(new GsonMsgConvertor())
                 .baseUrl("https://"+BoatConfigFile.DEFAULT.config.client.boat_server)
