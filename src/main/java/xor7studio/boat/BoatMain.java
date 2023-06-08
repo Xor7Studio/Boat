@@ -1,13 +1,19 @@
 package xor7studio.boat;
 
-import xor7studio.boat.authentication.AuthenticationServer;
+import xor7studio.boat.authentication.AuthenticationService;
 import xor7studio.boat.config.BoatConfigFile;
+import xor7studio.boat.config.TracebackServiceConfig;
+import xor7studio.boat.traceback.TracebackService;
 
 public class BoatMain {
     public static void main(String[] args) {
         System.out.println(BoatConfigFile.DEFAULT.config.run_as);
-        if(BoatConfigFile.DEFAULT.config.run_as.equals("server"))
-            new AuthenticationServer().start();
+        if(BoatConfigFile.DEFAULT.config.run_as.equals("server")){
+            new Thread(() -> new AuthenticationService().start()).start();
+            for(TracebackServiceConfig config:BoatConfigFile.DEFAULT.config.server.tracebacks)
+                if(config.run)
+                    new Thread(() -> new TracebackService(config).start()).start();
+        }
         else new BoatClient().start();
 
 //        System.out.println(HttpRequestUtil.post(""));

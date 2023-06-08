@@ -18,8 +18,8 @@ import xor7studio.boat.config.BoatConfigFile;
 import javax.net.ssl.SSLException;
 import java.io.File;
 
-public class AuthenticationServer{
-    public AuthenticationServer(){}
+public class AuthenticationService {
+    public AuthenticationService(){}
     public void start(){
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();

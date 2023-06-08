@@ -15,10 +15,10 @@ import xor7studio.boat.long_connection.packet.command.PacketCommandManager;
 
 import java.net.InetSocketAddress;
 
-public class LongConnectionServer {
+public class LongConnectionService {
     @Getter
     private final InetSocketAddress listen;
-    public LongConnectionServer(@NotNull InetSocketAddress listen){
+    public LongConnectionService(@NotNull InetSocketAddress listen){
         this.listen=listen;
     }
     public void start(){

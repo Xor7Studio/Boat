@@ -17,7 +17,7 @@ public class GetTracebackAddressPathHandler extends PathHandler {
     private static boolean tracebackServiceValid=false;
     public GetTracebackAddressPathHandler() {
         for(TracebackServiceConfig serviceConfig: BoatConfigFile.DEFAULT.config.server.tracebacks)
-            if(serviceConfig.run)
+            if(serviceConfig.valid)
                 validTracebackServices.add(serviceConfig);
         if(validTracebackServices.size()>=2) tracebackServiceValid=true;
     }

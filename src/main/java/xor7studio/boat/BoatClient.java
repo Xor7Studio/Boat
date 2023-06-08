@@ -4,7 +4,6 @@ import cn.zhxu.okhttps.*;
 import cn.zhxu.okhttps.gson.GsonMsgConvertor;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.io.Encoders;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -23,18 +22,20 @@ import xor7studio.boat.authentication.path.refresh.RefreshRequestData;
 import xor7studio.boat.authentication.path.refresh.RefreshResponseData;
 import xor7studio.boat.authentication.path.sign_in.SignInRequestData;
 import xor7studio.boat.authentication.path.sign_in.SignInResponseData;
-import xor7studio.boat.long_connection.ClientLongConnectionHandler;
 import xor7studio.boat.config.BoatConfig;
 import xor7studio.boat.config.BoatConfigFile;
+import xor7studio.boat.long_connection.ClientLongConnectionHandler;
 import xor7studio.boat.long_connection.packet.codec.PacketCodecHandler;
 import xor7studio.boat.long_connection.packet.command.PacketCommandHandler;
 import xor7studio.boat.long_connection.packet.command.PacketCommandManager;
 import xor7studio.boat.long_connection.session.SessionAttributes;
+import xor7studio.boat.traceback.TracebackClient;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.net.InetSocketAddress;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 public class BoatClient {
     private InetSocketAddress longConnectionAddress;
@@ -70,10 +71,14 @@ public class BoatClient {
 //        startLongConnection();
     }
     private void doAuthentication(){
-        signIn("data");
-        refresh();
+//        signIn("data");
+//        refresh();
         getTracebackAddress();
-        createSession();
+//        for(int i = 0 ; i < 100 ; i++)
+//            new Thread(()->
+                    new TracebackClient(tracebackAddress[0]).connect();
+//            );//+"1"
+//        createSession();
     }
     private void signIn(String data){
         try {
@@ -132,6 +137,7 @@ public class BoatClient {
                 .post()
                 .getBody()
                 .toBean(CreateSessionResponseData.class);
+        System.out.println(responseData.address);
         longConnectionAddress= BoatConfig.toInetSocketAddress(responseData.address);
         this.session_token=responseData.session_token;
         //TODO 解析expire_in 虽然不知道这玩意有啥用
@@ -145,7 +151,7 @@ public class BoatClient {
         }
         keyGenerator.init(128);
         SecretKey secretKey = keyGenerator.generateKey();
-        return Encoders.BASE64.encode(secretKey.getEncoded());
+        return Base64.getEncoder().encodeToString(secretKey.getEncoded());
     }
     private String readToken(@NotNull String token){
         AuthenticationTokenData tokenData = GsonUtils.fromJson(

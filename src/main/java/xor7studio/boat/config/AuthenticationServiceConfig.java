@@ -3,6 +3,7 @@ package xor7studio.boat.config;
 public class AuthenticationServiceConfig extends ServiceConfig {
     public AuthenticationServiceConfig() {
         listen = BoatConfig.DEFAULT_SERVER_ADDRESS_HOST+":1109";
+        run=true;
     }
 
     public Boolean enable_ssl = false;

@@ -11,6 +11,7 @@ import xor7studio.boat.config.BoatConfigFile;
 
 import java.nio.charset.StandardCharsets;
 import java.time.temporal.ChronoUnit;
+import java.util.Base64;
 
 public class CreateSessionPathHandler extends PathHandler {
     @Override
@@ -24,8 +25,8 @@ public class CreateSessionPathHandler extends PathHandler {
                                 .content()
                                 .toString(StandardCharsets.UTF_8),
                         CreateSessionRequestData.class);
-        if(!requestData.nat_type.equals("H") && !requestData.nat_type.equals("N") ||
-                requestData.session_pwd.length()!=16)
+        if(!(requestData.nat_type.equals("H") || requestData.nat_type.equals("E")) ||
+                Base64.getDecoder().decode(requestData.session_pwd).length!=16)
             return PathHandlerResult.builder()
                     .status(HttpResponseStatus.BAD_REQUEST).body("").build();
         CreateSessionResponseData responseData = new CreateSessionResponseData();
