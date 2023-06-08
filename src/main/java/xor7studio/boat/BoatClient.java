@@ -77,6 +77,7 @@ public class BoatClient {
 //        for(int i = 0 ; i < 100 ; i++)
 //            new Thread(()->
                     new TracebackClient(tracebackAddress[0]).connect();
+                    //TODO 支持nginx代理下的Traceback
 //            );//+"1"
 //        createSession();
     }
