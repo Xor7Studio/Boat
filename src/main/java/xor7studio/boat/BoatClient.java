@@ -131,7 +131,6 @@ public class BoatClient {
                 .post()
                 .getBody()
                 .toBean(CreateSessionResponseData.class);
-        System.out.println(responseData.address);
         longConnectionAddress= BoatConfig.toInetSocketAddress(responseData.address);
         this.session_token=responseData.session_token;
         //TODO 解析expire_in 虽然不知道这玩意有啥用
