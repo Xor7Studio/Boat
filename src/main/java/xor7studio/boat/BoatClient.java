@@ -67,19 +67,12 @@ public class BoatClient {
                 .build();
     }
     public void start(){
-        doAuthentication();
-//        startLongConnection();
-    }
-    private void doAuthentication(){
-//        signIn("data");
-//        refresh();
+        signIn("data");
+        refresh();
         getTracebackAddress();
-//        for(int i = 0 ; i < 100 ; i++)
-//            new Thread(()->
-                    new TracebackClient(tracebackAddress[0]).connect();
-                    //TODO 支持nginx代理下的Traceback
-//            );//+"1"
-//        createSession();
+        System.out.println(new TracebackClient(tracebackAddress).isHardNAT());//TODO 稳定支持nginx代理下的Traceback(目前此功能不稳定)
+        createSession();
+//        startLongConnection();
     }
     private void signIn(String data){
         try {
